@@ -1,0 +1,11 @@
+// n-step rule to adding resources to the REST API
+1. Create routes config
+2. Create DTOs
+3. Create DAO
+4. Create Service
+5. Create Controllers
+6. Create Middleware
+7. Implement routes config with controllers and middleware
+n. ...
+
+CONTINUE TUTORIAL PART 3 AT TESTING PART
