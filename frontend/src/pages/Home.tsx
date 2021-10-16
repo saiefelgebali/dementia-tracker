@@ -1,7 +1,13 @@
+import { Router, Routes, Route } from "solid-app-router";
 import { Component } from "solid-js";
+import Header from "../components/Header/Header";
 
 const Home: Component = () => {
-	return <div style={{ height: "100vh" }}>Hello world!</div>;
+	return (
+		<Router>
+			<Header />
+		</Router>
+	);
 };
 
 export default Home;

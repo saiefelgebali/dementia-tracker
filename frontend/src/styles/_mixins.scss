@@ -1,0 +1,32 @@
+@import "./variables";
+
+@mixin breakpoint($class) {
+	// Extra Small
+	@if $class == xs {
+		@media (max-width: $breakpoint-xs) {
+			@content;
+		}
+	}
+	// Small
+	@else if $class == sm {
+		@media (min-width: $breakpoint-sm) {
+			@content;
+		}
+	}
+	// Medium
+	@else if $class == md {
+		@media (min-width: $breakpoint-md) {
+			@content;
+		}
+	}
+	// Large
+	@else if $class == lg {
+		@media (min-width: $breakpoint-lg) {
+			@content;
+		}
+	}
+	// Error
+	@else {
+		@warn "Breakpoint mixin supports: xs, sm, md, lg";
+	}
+}
