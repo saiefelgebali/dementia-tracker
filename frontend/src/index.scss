@@ -60,6 +60,23 @@ input[type="password"] {
 }
 
 // Generic Styles
+
+div.primary {
+	background-color: $primary;
+}
+
+span.primary {
+	color: $primary;
+}
+
+.secondary {
+	background-color: $secondary;
+}
+
+.underline {
+	border-bottom: 2px solid $primary;
+}
+
 .flex {
 	display: flex;
 }
@@ -74,6 +91,10 @@ input[type="password"] {
 }
 .align-center {
 	align-items: center;
+}
+
+.hidden {
+	display: none;
 }
 
 .main {

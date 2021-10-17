@@ -1,35 +1,27 @@
 import { Component } from "solid-js";
-import Form from "../../components/Form/Form";
+import Form, { Input, InputGroup } from "../../components/Form/Form";
 
 const LoginPage: Component = () => {
+	function onSubmit(e: Event) {
+		e.preventDefault;
+	}
+
 	return (
-		<Form>
+		<Form onSubmit={onSubmit}>
 			<h1>Login to your account</h1>
-			<div>
-				<div>
-					<label>Email</label>
-				</div>
-				<div>
-					<input type='email' />
-				</div>
-			</div>
-			<div>
-				<div>
-					<label>Password</label>
-				</div>
-				<div>
-					<input type='password' />
-				</div>
-			</div>
-			<div>
-				<div>
-					<input type='checkbox' />
-					<div>Remember me</div>
-				</div>
-				<div>
-					<button>Login</button>
-				</div>
-			</div>
+			<Input label='Email'>
+				<input type='email' />
+			</Input>
+			<Input label='Email'>
+				<input type='password' />
+			</Input>
+			<InputGroup>
+				<input type='checkbox' />
+				<div>Remember me</div>
+			</InputGroup>
+			<Input>
+				<button>Login</button>
+			</Input>
 		</Form>
 	);
 };
