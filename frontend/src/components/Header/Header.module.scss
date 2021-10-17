@@ -1,9 +1,10 @@
+@import "../../styles/variables";
 @import "../../styles/mixins";
 
 .header {
 	user-select: none;
 	background-color: #357369;
-	height: 4rem;
+	height: $headerHeight;
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -21,32 +22,7 @@
 	color: white;
 	font-weight: 500;
 
-	&:focus {
-		outline: none;
-		transform: translateY(-2px);
-	}
-
-	padding: 2rem;
-	@include breakpoint(xs) {
-		padding: 1rem 2rem;
-	}
-
 	> .text {
 		cursor: pointer;
-		@include breakpoint(xs) {
-			display: none;
-		}
-	}
-
-	> .icon {
-		cursor: pointer;
-		display: none;
-		> svg {
-			height: 2rem;
-			width: auto;
-		}
-		@include breakpoint(xs) {
-			display: block;
-		}
 	}
 }

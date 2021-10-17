@@ -6,7 +6,11 @@ const MainLayout: Component = () => {
 	return (
 		<div>
 			<Header />
-			<Outlet />
+			<div class='flex justify-center'>
+				<div className='main'>
+					<Outlet />
+				</div>
+			</div>
 		</div>
 	);
 };

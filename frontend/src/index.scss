@@ -2,6 +2,7 @@
 @import "./styles/mixins";
 
 body {
+	background-color: white;
 	margin: 0;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
 		"Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -19,8 +20,64 @@ a {
 	text-decoration: none;
 }
 
+* {
+	box-sizing: border-box;
+}
+
+button {
+	cursor: pointer;
+	user-select: none;
+	border: none;
+	background-color: $primary;
+	color: white;
+	padding: 1rem 2rem;
+	border-radius: $borderRadius;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+	border: none;
+	outline: none;
+	outline: 1px solid hsla(0, 0%, 50%, 0.4);
+	border-radius: $borderRadius;
+	padding: 1rem 0.75rem;
+
+	&:focus {
+		outline-color: $primary;
+	}
+}
+
+.title {
+	font-weight: 400;
+	font-size: 3rem;
+	color: hsl(0, 0%, 0%);
+}
+
+.subtitle {
+	font-size: 2rem;
+	color: hsl(0, 0%, 40%);
+}
+
 // Generic Styles
+.flex {
+	display: flex;
+}
+
+.center {
+	justify-content: center;
+	align-items: center;
+}
+
+.justify-center {
+	justify-content: center;
+}
+.align-center {
+	align-items: center;
+}
+
 .main {
+	padding: 0rem 2rem;
 	@include breakpoint(xs) {
 		width: 100%;
 	}

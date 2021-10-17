@@ -1,0 +1,42 @@
+@import "../../styles/variables";
+@import "../../styles/mixins";
+
+.section {
+	display: flex;
+
+	justify-content: space-between;
+	flex-direction: column;
+	justify-content: center;
+	@include breakpoint(md) {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+}
+
+.heroSection {
+	@extend .section;
+	align-items: center;
+	height: 100vh;
+	height: calc(100vh - $headerHeight);
+
+	gap: 2rem;
+	@include breakpoint(lg) {
+		gap: 8rem;
+	}
+}
+
+.map {
+	background-color: $primary;
+	height: 400px;
+	width: 400px;
+	flex-shrink: 0;
+	border-radius: $borderRadius;
+	display: none;
+	@include breakpoint(md) {
+		display: block;
+	}
+}
+
+.callToAction {
+	width: 300px;
+}
