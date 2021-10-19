@@ -67,7 +67,7 @@ class UsersDao {
 		const existingUser = await this.User.findOneAndUpdate(
 			{ _id: userId },
 			{ $set: userFields },
-			{ new: true }
+			{ new: true } // returns updated object
 		).exec();
 
 		return existingUser;

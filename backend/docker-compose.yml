@@ -2,14 +2,14 @@ version: "3" # specify docker-compose version
 
 # define the services/containers to be run
 services:
-    app: # node project
-        build: . # specify the directory of the Dockerfile
-        ports:
-            - "3000:3000" # specify ports forwarding
-        container_name: node-app
-        restart: always
-        links:
-            - database # link this service to the database service
+    # app: # node project
+    #     build: . # specify the directory of the Dockerfile
+    #     ports:
+    #         - "3000:3000" # specify ports forwarding
+    #     container_name: node-app
+    #     restart: always
+    #     links:
+    #         - database # link this service to the database service
     database: # name of the MongoDB service
         image: mongo
         volumes:

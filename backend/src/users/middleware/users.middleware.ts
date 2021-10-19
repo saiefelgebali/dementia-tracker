@@ -13,6 +13,7 @@ class UsersMiddleware {
 				.send({ error: `A user with that email already exists.` });
 		return next();
 	};
+
 	validateSameEmailBelongsToSameUser: RequestHandler = async (
 		req,
 		res,
@@ -21,11 +22,13 @@ class UsersMiddleware {
 		if (res.locals.user._id === req.params.userId) return next();
 		return res.status(400).send({ error: `Invalid email` });
 	};
+
 	validatePatchEmail: RequestHandler = async (req, res, next) => {
 		if (req.body.email)
 			return this.validateSameEmailBelongsToSameUser(req, res, next);
 		return next();
 	};
+
 	validateUserExists: RequestHandler = async (req, res, next) => {
 		const user = await usersService.readById(req.params.userId);
 		if (user) {
@@ -37,10 +40,12 @@ class UsersMiddleware {
 			error: `User ${req.params.userId} not found`,
 		});
 	};
+
 	extractUserId: RequestHandler = async (req, res, next) => {
 		req.body.id = req.params.userId;
 		next();
 	};
+
 	userCantChangePermission: RequestHandler = async (req, res, next) => {
 		if (
 			"permissionFlags" in req.body &&
