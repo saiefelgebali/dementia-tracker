@@ -7,7 +7,7 @@
 	"scripts": {
 		"start": "npm run build && cross-env NODE_ENV=production node -r dotenv/config --unhandled-rejections=strict ./dist/app.js",
 		"dev": "cross-env NODE_ENV=development nodemon -r dotenv/config ./src/app.ts",
-		"test": "cross-env NODE_ENV=test mocha -r dotenv/config -r ts-node/register 'test/**/*.test.ts' --unhandled-rejections=strict",
+		"test": "cross-env NODE_ENV=test mocha -r dotenv/config -r ts-node/register './src/test/**/*.test.ts' --unhandled-rejections=strict",
 		"build": "tsc",
 		"database": "docker-compose up -d"
 	},

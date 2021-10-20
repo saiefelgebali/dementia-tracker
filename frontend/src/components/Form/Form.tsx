@@ -1,11 +1,4 @@
-import {
-	Accessor,
-	Component,
-	createEffect,
-	createMemo,
-	createSignal,
-	For,
-} from "solid-js";
+import { Accessor, Component, For } from "solid-js";
 import styles from "./Form.module.scss";
 
 // Container element
@@ -60,11 +53,12 @@ export const PageGroup: Component<{
 	pages: Component[];
 	current: Accessor<number>;
 	setCurrent: (prev: number) => number;
-}> = ({ pages, current, setCurrent }) => {
+	ref?: HTMLDivElement;
+}> = ({ pages, current, setCurrent, ref }) => {
 	// Show tabs
 	const Tabs = () => {
 		return (
-			<div class={styles.pagesTabs}>
+			<div class={styles.pagesTabs} ref={ref}>
 				<For each={pages}>
 					{(page, index) => (
 						<div

@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../styles/variables";
 @import "../styles/mixins";
 
@@ -43,7 +44,7 @@ $secondary: hsl(0, 0%, 75%);
 .slide1 {
 	$multiplier: 1.25;
 	background-color: $primary;
-	opacity: 1 / $multiplier;
+	opacity: math.div(1, $multiplier);
 	width: 400px;
 	height: $baseHeight * $multiplier;
 	animation: SlideRL ($animSpeed * $multiplier) ease-in-out alternate infinite;
@@ -51,7 +52,7 @@ $secondary: hsl(0, 0%, 75%);
 .slide2 {
 	$multiplier: 2;
 	background-color: $primary;
-	opacity: 1 / $multiplier;
+	opacity: math.div(1, $multiplier);
 	width: 200px;
 	height: $baseHeight * $multiplier;
 	animation: SlideLR ($animSpeed * $multiplier) ease-in-out alternate infinite;
@@ -59,7 +60,7 @@ $secondary: hsl(0, 0%, 75%);
 .slide3 {
 	$multiplier: 1.2;
 	background-color: $primary;
-	opacity: 1 / $multiplier;
+	opacity: math.div(1, $multiplier);
 	width: 400px;
 	height: $baseHeight * $multiplier;
 	animation: SlideRL ($animSpeed * $multiplier) ease-in-out alternate infinite;
@@ -67,7 +68,7 @@ $secondary: hsl(0, 0%, 75%);
 .slide4 {
 	$multiplier: 1.5;
 	background-color: $primary;
-	opacity: 1 / $multiplier;
+	opacity: math.div(1, $multiplier);
 	width: 400px;
 	height: $baseHeight * $multiplier;
 	animation: SlideLR ($animSpeed * $multiplier) ease-in-out alternate infinite;

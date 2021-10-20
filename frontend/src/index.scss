@@ -22,6 +22,7 @@ a {
 
 * {
 	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
 }
 
 button {
@@ -40,6 +41,7 @@ input[type="password"] {
 	border: none;
 	outline: none;
 	outline: 1px solid hsla(0, 0%, 50%, 0.4);
+	border-radius: 8px;
 	border-radius: $borderRadius;
 	padding: 1rem 0.75rem;
 
