@@ -6,6 +6,7 @@ import bodyValidationMiddleware from "../common/middleware/body.validation.middl
 import permissionMiddleware from "../common/middleware/common.permission.middleware";
 import { PermissionFlag } from "../common/middleware/common.permissionflag.enum";
 import usersMiddleware from "../users/middleware/users.middleware";
+import groupsController from "./controllers/groups.controller";
 import groupsMiddleware from "./middleware/groups.middleware";
 
 export class GroupRoutes extends CommonRoutesConfig {
@@ -19,14 +20,18 @@ export class GroupRoutes extends CommonRoutesConfig {
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.ADMIN_PERMISSION
-				)
-				// list all groups
+				),
+				groupsController.listGroups
 			)
 			.post(
+				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
-				)
+				),
+				body("name").isString(),
+				bodyValidationMiddleware.verifyBodyFieldsErrors,
 				// create a new group with requesting nurse as 1st admin
+				groupsController.createGroup
 			);
 
 		this.app.param("groupId", groupsMiddleware.extractGroupId);
@@ -37,14 +42,50 @@ export class GroupRoutes extends CommonRoutesConfig {
 				groupsMiddleware.validateGroupExists,
 				jwtMiddleware.validJWTNeeded
 			)
-			.get
-			// return group data
-			()
-			.delete
-			// remove group from database
-			();
+			.get(
+				// return group data
+				groupsMiddleware.validateGroupExists,
+				groupsController.getGroupById
+			)
+			.patch(
+				body("name").isString().optional(),
+				bodyValidationMiddleware.verifyBodyFieldsErrors,
+				groupsController.patchGroup
+			)
+			.delete(
+				// remove group from database
+				jwtMiddleware.validJWTNeeded,
+				groupsMiddleware.validateGroupExists,
+				groupsMiddleware.validateUserAdminOfGroup,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.removeGroup
+			);
 
-		this.app.route("/groups/:groupId/users");
+		this.app
+			.route("/groups/:groupId/patients/:userId")
+			.all(usersMiddleware.validateUserExists)
+			.post(
+				usersMiddleware.extractUserId,
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.addPatient
+			);
+
+		this.app
+			.route("/groups/:groupId/nurses/:userId")
+			.all(usersMiddleware.validateUserExists)
+			.post(
+				usersMiddleware.extractUserId,
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.addNurse
+			);
 
 		return this.app;
 	}

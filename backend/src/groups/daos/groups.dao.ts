@@ -70,6 +70,30 @@ class GroupsDao {
 		return existingGroup;
 	}
 
+	async addPatientToGroup(groupId: string, patientId: string) {
+		const existingGroup = await this.Group.findOneAndUpdate(
+			{
+				_id: groupId,
+			},
+			{ $push: { patients: patientId } },
+			{ new: true }
+		);
+
+		return existingGroup;
+	}
+
+	async addNurseToGroup(groupId: string, nurseId: string) {
+		const existingGroup = await this.Group.findOneAndUpdate(
+			{
+				_id: groupId,
+			},
+			{ $push: { nurses: nurseId } },
+			{ new: true }
+		);
+
+		return existingGroup;
+	}
+
 	async removeGroupById(groupId: string) {
 		return this.Group.deleteOne({ _id: groupId }).exec();
 	}

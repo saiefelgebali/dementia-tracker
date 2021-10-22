@@ -24,7 +24,17 @@ class GroupService implements CRUD {
 		return groupsDao.updateGroupById(id, resource);
 	};
 
-	getGroupsByUser = (userId: string) => {};
+	getGroupsByUser = (userId: string, offset: number, limit: number) => {
+		return groupsDao.getUserGroups(userId, offset, limit);
+	};
+
+	addPatientToGroup = (groupId: string, patientId: string) => {
+		return groupsDao.addPatientToGroup(groupId, patientId);
+	};
+
+	addNurseToGroup = (groupId: string, nurseId: string) => {
+		return groupsDao.addNurseToGroup(groupId, nurseId);
+	};
 }
 
 export default new GroupService();

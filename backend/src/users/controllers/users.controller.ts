@@ -15,6 +15,12 @@ class UsersController {
 		return res.status(200).send(users);
 	};
 
+	getUsersByIds: RequestHandler = async (req, res) => {
+		const userIds = req.body.userIds;
+		const users = await usersService.getUsersByIds(userIds);
+		return res.status(200).send(users);
+	};
+
 	getUserById: RequestHandler = async (req, res) => {
 		const user = await usersService.readById(req.params.userId);
 		return res.status(200).send(user);

@@ -18,10 +18,12 @@ export class UserRoutes extends CommonRoutesConfig {
 			.route("/users")
 			.get(
 				jwtMiddleware.validJWTNeeded,
-				permissionMiddleware.permissionFlagRequired(
-					PermissionFlag.ADMIN_PERMISSION
-				),
-				usersController.listUsers
+				// permissionMiddleware.permissionFlagRequired(
+				// 	PermissionFlag.PATIENT_PERMISSION
+				// ),
+				body("userIds").isArray(),
+				bodyValidationMiddleware.verifyBodyFieldsErrors,
+				usersController.getUsersByIds
 			)
 			.post(
 				body("email").isEmail(),

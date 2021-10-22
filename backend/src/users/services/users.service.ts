@@ -24,6 +24,9 @@ class UserService implements CRUD {
 		return UsersDao.updateUserById(id, resource);
 	};
 
+	getUsersByIds = (userIds: string[]) => {
+		return UsersDao.getUsersByIds(userIds);
+	};
 	getUserByEmail = (email: string) => {
 		return UsersDao.getUserByEmail(email);
 	};

@@ -46,6 +46,10 @@ class UsersDao {
 		return this.User.find().limit(limit).skip(offset).exec();
 	}
 
+	async getUsersByIds(userIds: string[]) {
+		return this.User.find({ _id: { $in: userIds } }).exec();
+	}
+
 	async getUserById(userId: string) {
 		return this.User.findOne({ _id: userId }).populate("User").exec();
 	}
