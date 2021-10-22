@@ -1,7 +1,6 @@
 import app from "../../app";
 import supertest, { SuperAgentTest } from "supertest";
 import { expect } from "chai";
-import shortid from "shortid";
 import mongoose from "mongoose";
 import { TestUser, patient, nurse, assistant } from "../test.user.interface";
 
