@@ -31,15 +31,6 @@ async function testLoginUser(user: TestUser) {
 	user.refreshToken = res.body.refreshToken;
 }
 
-// Test delete a user
-async function testDeleteUser(user: TestUser) {
-	const res = await request
-		.delete(`/users/${user.id}`)
-		.set({ Authorization: `Bearer ${user.accessToken}` })
-		.send();
-	expect(res.status).to.equal(204);
-}
-
 describe("test user endpoints", () => {
 	/**
 	 * End to end API testing
@@ -135,11 +126,5 @@ describe("test user endpoints", () => {
 			expect(res.body._id).to.equal(patient.id);
 			expect(res.body.email).to.equal(patient.body.email);
 		});
-	});
-
-	describe("delete users", () => {
-		it("delete patient", async () => testDeleteUser(patient));
-		it("delete nurse", async () => testDeleteUser(nurse));
-		it("delete assistant", async () => testDeleteUser(assistant));
 	});
 });

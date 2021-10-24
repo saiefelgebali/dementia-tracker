@@ -47,10 +47,16 @@ class GroupsDao {
 	}
 
 	async getUserGroups(userId: string, offset: number, limit: number) {
-		return this.Group.find({ nurses: userId, users: userId })
-			.limit(limit)
-			.skip(offset)
-			.exec();
+		return (
+			this.Group.find({
+				nurses: userId,
+			})
+				// find correct OR case in mongoose api
+				.or({ users: userId })
+				.limit(limit)
+				.skip(offset)
+				.exec()
+		);
 	}
 
 	async getGroupById(groupId: string) {
@@ -70,24 +76,32 @@ class GroupsDao {
 		return existingGroup;
 	}
 
-	async addPatientToGroup(groupId: string, patientId: string) {
+	async addUser(
+		groupId: string,
+		userId: string,
+		userList: "nurses" | "patients"
+	) {
 		const existingGroup = await this.Group.findOneAndUpdate(
 			{
 				_id: groupId,
 			},
-			{ $push: { patients: patientId } },
+			{ $push: { [userList]: userId } },
 			{ new: true }
 		);
 
 		return existingGroup;
 	}
 
-	async addNurseToGroup(groupId: string, nurseId: string) {
+	async removeUser(
+		groupId: string,
+		userId: string,
+		userList: "nurses" | "patients"
+	) {
 		const existingGroup = await this.Group.findOneAndUpdate(
 			{
 				_id: groupId,
 			},
-			{ $push: { nurses: nurseId } },
+			{ $pull: { [userList]: userId } },
 			{ new: true }
 		);
 

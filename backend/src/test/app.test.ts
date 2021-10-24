@@ -26,3 +26,10 @@ describe("Index Test", () => {
 
 // API Testing Agent
 export const request = supertest.agent(app);
+
+describe.only("test app", () => {
+	// order of tests
+	require("./users/users.test");
+	require("./groups/groups.test");
+	require("./users/delete.users.test");
+});

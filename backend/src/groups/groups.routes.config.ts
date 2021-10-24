@@ -19,9 +19,9 @@ export class GroupRoutes extends CommonRoutesConfig {
 			.get(
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
-					PermissionFlag.ADMIN_PERMISSION
+					PermissionFlag.NURSE_PERMISSION
 				),
-				groupsController.listGroups
+				groupsController.listGroupsByUser
 			)
 			.post(
 				jwtMiddleware.validJWTNeeded,
@@ -67,24 +67,36 @@ export class GroupRoutes extends CommonRoutesConfig {
 			.route("/groups/:groupId/patients/:userId")
 			.all(usersMiddleware.validateUserExists)
 			.post(
-				usersMiddleware.extractUserId,
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
 				),
 				groupsController.addPatient
+			)
+			.delete(
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.removePatient
 			);
 
 		this.app
 			.route("/groups/:groupId/nurses/:userId")
 			.all(usersMiddleware.validateUserExists)
 			.post(
-				usersMiddleware.extractUserId,
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
 				),
 				groupsController.addNurse
+			)
+			.delete(
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.removeNurse
 			);
 
 		return this.app;
