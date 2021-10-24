@@ -1,8 +1,7 @@
-import app from "../../app";
-import supertest, { SuperAgentTest } from "supertest";
+import { SuperAgentTest } from "supertest";
 import { expect } from "chai";
-import mongoose from "mongoose";
 import { TestUser, patient, nurse, assistant } from "../test.user.interface";
+import { request } from "../test.request";
 
 // Test create a user
 async function testCreateUser(request: SuperAgentTest, user: TestUser) {
@@ -38,25 +37,6 @@ async function testDeleteUser(request: SuperAgentTest, user: TestUser) {
 }
 
 describe("test user endpoints", () => {
-	// api testing agent
-	let request: SuperAgentTest;
-
-	// this runs before each test
-	before(() => {
-		// connect testing agent to app
-		request = supertest.agent(app);
-	});
-
-	// this runs after each test
-	after((done) => {
-		// close connection to app
-		app.close(() => {
-			// close database connection
-			// then call done()
-			mongoose.connection.close(done);
-		});
-	});
-
 	/**
 	 * End to end API testing
 	 */
