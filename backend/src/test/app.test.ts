@@ -1,16 +1,10 @@
 import { expect } from "chai";
-
-import debug from "debug";
 import mongoose from "mongoose";
 import app from "../app";
+import supertest from "supertest";
+import debug from "debug";
 
 const debugLog = debug("test:app");
-
-// // this runs before each test
-// before(() => {
-// 	// connect testing agent to app
-// 	request = supertest.agent(app);
-// });
 
 // this runs after each test
 after((done) => {
@@ -29,3 +23,6 @@ describe("Index Test", () => {
 		expect(true).to.equal(true);
 	});
 });
+
+// API Testing Agent
+export const request = supertest.agent(app);

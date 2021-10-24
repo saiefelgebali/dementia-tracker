@@ -1,10 +1,14 @@
-import { SuperAgentTest } from "supertest";
 import { expect } from "chai";
-import { TestUser, patient, nurse, assistant } from "../test.user.interface";
-import { request } from "../test.request";
+import {
+	TestUser,
+	patient,
+	nurse,
+	assistant,
+} from "../_interface/test.user.interface";
+import { request } from "../app.test";
 
 // Test create a user
-async function testCreateUser(request: SuperAgentTest, user: TestUser) {
+async function testCreateUser(user: TestUser) {
 	const res = await request.post("/users").send(user.body);
 	expect(res.status).to.equal(201);
 	expect(res.body).to.not.be.empty;
@@ -14,7 +18,7 @@ async function testCreateUser(request: SuperAgentTest, user: TestUser) {
 }
 
 // Test login a user
-async function testLoginUser(request: SuperAgentTest, user: TestUser) {
+async function testLoginUser(user: TestUser) {
 	const res = await request.post("/auth").send(user.body);
 	// Validate response
 	expect(res.status).to.be.equal(201);
@@ -28,7 +32,7 @@ async function testLoginUser(request: SuperAgentTest, user: TestUser) {
 }
 
 // Test delete a user
-async function testDeleteUser(request: SuperAgentTest, user: TestUser) {
+async function testDeleteUser(user: TestUser) {
 	const res = await request
 		.delete(`/users/${user.id}`)
 		.set({ Authorization: `Bearer ${user.accessToken}` })
@@ -41,15 +45,15 @@ describe("test user endpoints", () => {
 	 * End to end API testing
 	 */
 	describe("create users", () => {
-		it("create patient", async () => testCreateUser(request, patient));
-		it("create nurse", async () => testCreateUser(request, nurse));
-		it("create assistant", async () => testCreateUser(request, assistant));
+		it("create patient", async () => testCreateUser(patient));
+		it("create nurse", async () => testCreateUser(nurse));
+		it("create assistant", async () => testCreateUser(assistant));
 	});
 
 	describe("login users", () => {
-		it("login patient", async () => testLoginUser(request, patient));
-		it("login nurse", async () => testLoginUser(request, nurse));
-		it("login assistant", async () => testLoginUser(request, assistant));
+		it("login patient", async () => testLoginUser(patient));
+		it("login nurse", async () => testLoginUser(nurse));
+		it("login assistant", async () => testLoginUser(assistant));
 	});
 
 	describe("with a valid access token", () => {
@@ -134,8 +138,8 @@ describe("test user endpoints", () => {
 	});
 
 	describe("delete users", () => {
-		it("delete patient", async () => testDeleteUser(request, patient));
-		it("delete nurse", async () => testDeleteUser(request, nurse));
-		it("delete assistant", async () => testDeleteUser(request, assistant));
+		it("delete patient", async () => testDeleteUser(patient));
+		it("delete nurse", async () => testDeleteUser(nurse));
+		it("delete assistant", async () => testDeleteUser(assistant));
 	});
 });
