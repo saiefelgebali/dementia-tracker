@@ -27,6 +27,14 @@ describe("test group endpoints", () => {
 		group.body.nurses.push(nurse.id);
 	});
 
+	it("dissalow getting a group that does not exist", async () => {
+		const res = await request
+			.get("/groups/not-a-group")
+			.set({ Authorization: `Bearer ${nurse.accessToken}` })
+			.send();
+		expect(res.status).to.equal(404);
+	});
+
 	it("disallow patient creating a group", async () => {
 		const res = await request
 			.post("/groups")
