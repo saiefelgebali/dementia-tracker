@@ -47,16 +47,12 @@ class GroupsDao {
 	}
 
 	async getUserGroups(userId: string, offset: number, limit: number) {
-		return (
-			this.Group.find({
-				nurses: userId,
-			})
-				// find correct OR case in mongoose api
-				.or({ users: userId })
-				.limit(limit)
-				.skip(offset)
-				.exec()
-		);
+		return this.Group.find({
+			$or: [{ nurses: userId }, { users: userId }],
+		})
+			.limit(limit)
+			.skip(offset)
+			.exec();
 	}
 
 	async getGroupById(groupId: string) {

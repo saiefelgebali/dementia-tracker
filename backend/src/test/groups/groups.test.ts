@@ -1,12 +1,7 @@
 import { expect } from "chai";
 import { request } from "../app.test";
 import { TestGroup } from "../_interface/test.group.interface";
-import {
-	assistant,
-	nurse,
-	patient,
-	TestUser,
-} from "../_interface/test.user.interface";
+import { assistant, nurse, patient } from "../_interface/test.user.interface";
 
 const group: TestGroup = {
 	id: "",
@@ -16,21 +11,6 @@ const group: TestGroup = {
 		patients: [],
 	},
 };
-
-async function testCreateGroup(user: TestUser, auth: boolean) {
-	// create group and return group id
-	const res = await request
-		.post("/groups")
-		.set({ Authorization: `Bearer ${user.accessToken}` })
-		.send(group.body);
-	expect(res.status).to.equal(auth ? 201 : 403);
-	if (auth) {
-		expect(res.body).to.not.be.empty;
-		expect(res.body).to.be.an("object");
-		expect(res.body.id).to.be.a("string");
-		group.id = res.body.id;
-	}
-}
 
 describe("test group endpoints", () => {
 	it("create group", async () => {
@@ -87,7 +67,7 @@ describe("test group endpoints", () => {
 			expect(res.body).to.not.be.empty;
 			expect(res.body).to.be.an("Array");
 			expect(res.body.length).to.be.equal(1);
-			expect(res.body[0].id).to.be.equal(group.id);
+			expect(res.body[0]._id).to.be.equal(group.id);
 		});
 
 		it("get group as nurse", async () => {
