@@ -3,7 +3,7 @@ import Form, { PageGroup } from "../../components/Form/Form";
 import RegisterInputPage_1 from "./RegisterInputPage_1";
 import RegisterInputPage_2 from "./RegisterInputPage_2";
 import RegisterInputPage_3 from "./RegisterInputPage_3";
-import { accountType, page, ref, setPage } from "./_shared";
+import { accountType, page, setPage } from "./RegisterPage.state";
 
 const RegisterPage: Component = () => {
 	// Functions
@@ -18,13 +18,6 @@ const RegisterPage: Component = () => {
 		RegisterInputPage_2,
 		RegisterInputPage_3,
 	];
-
-	// Effects
-	createEffect(() => {
-		if (!page() || ref()) return;
-
-		console.log(ref()?.clientHeight);
-	});
 
 	return (
 		<Form onSubmit={onSubmit}>
