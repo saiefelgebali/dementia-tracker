@@ -12,7 +12,7 @@ const LoginPage: Component = () => {
 			<Input label='Email'>
 				<input type='email' />
 			</Input>
-			<Input label='Email'>
+			<Input label='Password'>
 				<input type='password' />
 			</Input>
 			<InputGroup>
