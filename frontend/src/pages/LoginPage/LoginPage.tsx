@@ -15,10 +15,6 @@ const LoginPage: Component = () => {
 			<Input label='Password'>
 				<input type='password' />
 			</Input>
-			<InputGroup>
-				<input type='checkbox' />
-				<div>Remember me</div>
-			</InputGroup>
 			<Input>
 				<button>Login</button>
 			</Input>

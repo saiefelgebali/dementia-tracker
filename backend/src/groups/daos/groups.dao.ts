@@ -47,7 +47,9 @@ class GroupsDao {
 	}
 
 	async getUserGroups(userId: string, offset: number, limit: number) {
-		return this.Group.find({ nurses: userId, users: userId })
+		return this.Group.find({
+			$or: [{ nurses: userId }, { users: userId }],
+		})
 			.limit(limit)
 			.skip(offset)
 			.exec();
@@ -70,24 +72,32 @@ class GroupsDao {
 		return existingGroup;
 	}
 
-	async addPatientToGroup(groupId: string, patientId: string) {
+	async addUser(
+		groupId: string,
+		userId: string,
+		userList: "nurses" | "patients"
+	) {
 		const existingGroup = await this.Group.findOneAndUpdate(
 			{
 				_id: groupId,
 			},
-			{ $push: { patients: patientId } },
+			{ $push: { [userList]: userId } },
 			{ new: true }
 		);
 
 		return existingGroup;
 	}
 
-	async addNurseToGroup(groupId: string, nurseId: string) {
+	async removeUser(
+		groupId: string,
+		userId: string,
+		userList: "nurses" | "patients"
+	) {
 		const existingGroup = await this.Group.findOneAndUpdate(
 			{
 				_id: groupId,
 			},
-			{ $push: { nurses: nurseId } },
+			{ $pull: { [userList]: userId } },
 			{ new: true }
 		);
 

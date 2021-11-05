@@ -1,15 +1,52 @@
 import { Component, createEffect } from "solid-js";
 import Form, { PageGroup } from "../../components/Form/Form";
+import { fetchLoginUser } from "../../requests/login.request";
+import { fetchRegisterUser } from "../../requests/register.request";
 import RegisterInputPage_1 from "./RegisterInputPage_1";
 import RegisterInputPage_2 from "./RegisterInputPage_2";
 import RegisterInputPage_3 from "./RegisterInputPage_3";
-import { accountType, page, ref, setPage } from "./_shared";
+import {
+	accountType,
+	email,
+	page,
+	password,
+	setPage,
+} from "./RegisterPage.state";
 
 const RegisterPage: Component = () => {
 	// Functions
-	function onSubmit(e: Event) {
+	async function onSubmit(e: Event) {
 		e.preventDefault();
-		console.log("submit");
+
+		const permissionFlags = (() => {
+			switch (accountType()) {
+				case "patient":
+					return 1;
+				case "nurse":
+					return 2;
+				default:
+					return 1;
+			}
+		})();
+
+		await fetchRegisterUser({
+			email: email(),
+			password: password(),
+			permissionFlags,
+		});
+
+		console.log({
+			email: email(),
+			password: password(),
+			permissionFlags,
+		});
+
+		// temp
+		const res = await fetchLoginUser({
+			email: email(),
+			password: password(),
+		});
+		console.log(res);
 	}
 
 	// Combine pages
@@ -18,14 +55,14 @@ const RegisterPage: Component = () => {
 		RegisterInputPage_2,
 		RegisterInputPage_3,
 	];
-
-	// Effects
-	createEffect(() => {
-		if (!page() || ref()) return;
-
-		console.log(ref()?.clientHeight);
-	});
-
+	() => {
+		switch (accountType()) {
+			case "nurse":
+				return 1;
+			case "patient":
+				return 2;
+		}
+	};
 	return (
 		<Form onSubmit={onSubmit}>
 			<h1>

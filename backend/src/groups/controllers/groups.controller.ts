@@ -8,8 +8,18 @@ const debugLog = debug("app:groups-controller");
 class GroupController {
 	listGroups: RequestHandler = async (req, res) => {
 		const { offset = 0, limit = 100 } = req.body;
-		const groups = await usersService.list(offset, limit);
+		const groups = await groupsService.list(offset, limit);
 		return res.status(200).send(groups);
+	};
+
+	listGroupsByUser: RequestHandler = async (req, res) => {
+		const { offset = 0, limit = 100 } = req.body;
+		const userGroups = await groupsService.getGroupsByUser(
+			res.locals.jwt.userId,
+			offset,
+			limit
+		);
+		return res.status(200).send(userGroups);
 	};
 
 	getGroupById: RequestHandler = async (req, res) => {
@@ -46,7 +56,7 @@ class GroupController {
 	};
 
 	addPatient: RequestHandler = async (req, res) => {
-		const result = await groupsService.addPatientToGroup(
+		const result = await groupsService.addPatient(
 			req.body.groupId,
 			req.body.id
 		);
@@ -54,7 +64,23 @@ class GroupController {
 	};
 
 	addNurse: RequestHandler = async (req, res) => {
-		const result = await groupsService.addNurseToGroup(
+		const result = await groupsService.addNurse(
+			req.body.groupId,
+			req.body.id
+		);
+		return res.status(204).send();
+	};
+
+	removePatient: RequestHandler = async (req, res) => {
+		const result = await groupsService.removePatient(
+			req.body.groupId,
+			req.body.id
+		);
+		return res.status(204).send();
+	};
+
+	removeNurse: RequestHandler = async (req, res) => {
+		const result = await groupsService.removeNurse(
 			req.body.groupId,
 			req.body.id
 		);

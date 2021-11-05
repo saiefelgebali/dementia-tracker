@@ -18,9 +18,6 @@ export class UserRoutes extends CommonRoutesConfig {
 			.route("/users")
 			.get(
 				jwtMiddleware.validJWTNeeded,
-				// permissionMiddleware.permissionFlagRequired(
-				// 	PermissionFlag.PATIENT_PERMISSION
-				// ),
 				body("userIds").isArray(),
 				bodyValidationMiddleware.verifyBodyFieldsErrors,
 				usersController.getUsersByIds
@@ -77,6 +74,20 @@ export class UserRoutes extends CommonRoutesConfig {
 				usersController.patchUser
 			)
 			.delete(usersController.removeUser);
+
+		this.app
+			.route("/users/:userId/data")
+			.all(
+				usersMiddleware.validateUserExists,
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.onlySameUserOrAdminCanAccess
+			)
+			.get(usersController.getUserData)
+			.post(
+				body("location").isString(),
+				bodyValidationMiddleware.verifyBodyFieldsErrors,
+				usersController.addUserData
+			);
 
 		this.app.put("/users/:userId/permissionFlags/:permissionFlags", [
 			jwtMiddleware.validJWTNeeded,

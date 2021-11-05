@@ -1,6 +1,7 @@
 import { Component } from "solid-js";
 import { InputGroup, InputPage } from "../../components/Form/Form";
-import { page, setPage, setAccountType, AccountType } from "./_shared";
+import { page, setPage, setAccountType } from "./RegisterPage.state";
+import { AccountType } from "./_shared";
 
 const RegisterInputPage_1: Component = () => {
 	function handleSelectPermissions(e: Event) {

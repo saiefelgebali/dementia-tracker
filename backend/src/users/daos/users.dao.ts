@@ -4,12 +4,23 @@ import { PatchUserDto } from "../dto/patch.user.dto";
 import { PutUserDto } from "../dto/put.user.dto";
 import { debug } from "debug";
 import shortid from "shortid";
-import { PermissionFlag } from "../../common/middleware/common.permissionflag.enum";
+import { CreateUserDataDto } from "../dto/create.user.data.dto";
 
 const debugLog: debug.Debugger = debug("app:users-dao");
 
 class UsersDao {
 	private Schema = mongooseService.getMongoose().Schema;
+
+	private dataSchema = new this.Schema(
+		{
+			_id: String,
+			userId: String,
+			location: String,
+		},
+		{ id: false, timestamps: true }
+	);
+
+	private Data = mongooseService.getMongoose().model("Data", this.dataSchema);
 
 	private userSchema = new this.Schema(
 		{
@@ -40,6 +51,27 @@ class UsersDao {
 		await user.save();
 		debugLog(`Created new user with id ${user._id}`);
 		return user._id;
+	}
+
+	async addUserData(userId: string, dataFields: CreateUserDataDto) {
+		const dataId = shortid.generate();
+		const data = new this.Data({
+			_id: dataId,
+			userId,
+			location: dataFields.location,
+		});
+		await data.save();
+		debugLog(`Created new data for user ${userId}`);
+		return data._id;
+	}
+
+	async getUserData(userId: string, offset: number, limit: number) {
+		const data = this.Data.find({ userId })
+			.skip(offset)
+			.limit(limit)
+			.exec();
+
+		return data;
 	}
 
 	async getUsers(offset: number, limit: number) {

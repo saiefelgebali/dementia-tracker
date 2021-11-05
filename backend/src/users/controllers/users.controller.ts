@@ -64,6 +64,17 @@ class UsersController {
 		debugLog(`updated user ${req.body.id} permissions, %O`, result);
 		return res.status(204).send();
 	};
+
+	addUserData: RequestHandler = async (req, res) => {
+		const dataId = await usersService.addUserData(req.body.id, req.body);
+		return res.status(201).send({ id: dataId });
+	};
+
+	getUserData: RequestHandler = async (req, res) => {
+		const { offset = 0, limit = 100 } = req.body;
+		const data = await usersService.getUserData(req.body.id, offset, limit);
+		return res.status(200).send(data);
+	};
 }
 
 export default new UsersController();

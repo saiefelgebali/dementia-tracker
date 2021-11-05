@@ -11,6 +11,8 @@ export interface TestUser {
 		lastName: string;
 	};
 
+	data: { id: string; location: string }[];
+
 	accessToken: string;
 	refreshToken: string;
 }
@@ -24,6 +26,7 @@ export const patient: TestUser = {
 		firstName: "Johnny",
 		lastName: "Doeski",
 	},
+	data: [],
 	accessToken: "",
 	refreshToken: "",
 };
@@ -37,6 +40,7 @@ export const nurse: TestUser = {
 		firstName: "Jospeh",
 		lastName: "Nursing",
 	},
+	data: [],
 	accessToken: "",
 	refreshToken: "",
 };
@@ -50,6 +54,7 @@ export const assistant: TestUser = {
 		firstName: "Ayaan",
 		lastName: "Mahmoud",
 	},
+	data: [],
 	accessToken: "",
 	refreshToken: "",
 };

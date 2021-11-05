@@ -19,9 +19,9 @@ export class GroupRoutes extends CommonRoutesConfig {
 			.get(
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
-					PermissionFlag.ADMIN_PERMISSION
+					PermissionFlag.NURSE_PERMISSION
 				),
-				groupsController.listGroups
+				groupsController.listGroupsByUser
 			)
 			.post(
 				jwtMiddleware.validJWTNeeded,
@@ -35,16 +35,14 @@ export class GroupRoutes extends CommonRoutesConfig {
 			);
 
 		this.app.param("groupId", groupsMiddleware.extractGroupId);
+		this.app.param("groupId", groupsMiddleware.validateGroupExists);
+		this.app.param("userId", usersMiddleware.validateUserExists);
 
 		this.app
 			.route("/groups/:groupId")
-			.all(
-				groupsMiddleware.validateGroupExists,
-				jwtMiddleware.validJWTNeeded
-			)
+			.all(jwtMiddleware.validJWTNeeded)
 			.get(
 				// return group data
-				groupsMiddleware.validateGroupExists,
 				groupsController.getGroupById
 			)
 			.patch(
@@ -55,7 +53,6 @@ export class GroupRoutes extends CommonRoutesConfig {
 			.delete(
 				// remove group from database
 				jwtMiddleware.validJWTNeeded,
-				groupsMiddleware.validateGroupExists,
 				groupsMiddleware.validateUserAdminOfGroup,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
@@ -65,26 +62,36 @@ export class GroupRoutes extends CommonRoutesConfig {
 
 		this.app
 			.route("/groups/:groupId/patients/:userId")
-			.all(usersMiddleware.validateUserExists)
 			.post(
-				usersMiddleware.extractUserId,
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
 				),
 				groupsController.addPatient
+			)
+			.delete(
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.removePatient
 			);
 
 		this.app
 			.route("/groups/:groupId/nurses/:userId")
-			.all(usersMiddleware.validateUserExists)
 			.post(
-				usersMiddleware.extractUserId,
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
 				),
 				groupsController.addNurse
+			)
+			.delete(
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.permissionFlagRequired(
+					PermissionFlag.NURSE_PERMISSION
+				),
+				groupsController.removeNurse
 			);
 
 		return this.app;

@@ -3,6 +3,7 @@ import { CRUD } from "../../common/interfaces/crud.interface";
 import { CreateUserDto } from "../dto/create.user.dto";
 import { PutUserDto } from "../dto/put.user.dto";
 import { PatchUserDto } from "../dto/patch.user.dto";
+import { CreateUserDataDto } from "../dto/create.user.data.dto";
 
 class UserService implements CRUD {
 	list = (offset: number, limit: number) => {
@@ -32,6 +33,13 @@ class UserService implements CRUD {
 	};
 	getUserByEmailWithPassword = (email: string) => {
 		return UsersDao.getUserByEmailWithPassword(email);
+	};
+
+	addUserData = (id: string, data: CreateUserDataDto) => {
+		return UsersDao.addUserData(id, data);
+	};
+	getUserData = (id: string, offset: number, limit: number) => {
+		return UsersDao.getUserData(id, offset, limit);
 	};
 }
 
