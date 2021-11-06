@@ -50,6 +50,15 @@ input[type="password"] {
 	}
 }
 
+input:invalid {
+	&:not(:placeholder-shown) {
+		outline-color: $danger;
+	}
+}
+input:valid {
+	outline-color: hsla(0, 0%, 10%, 0.4);
+}
+
 .title {
 	font-weight: 400;
 	font-size: 3rem;
@@ -59,6 +68,22 @@ input[type="password"] {
 .subtitle {
 	font-size: 2rem;
 	color: hsl(0, 0%, 40%);
+}
+
+// form styling
+form {
+	label {
+		display: block;
+		margin-bottom: 0.5rem;
+	}
+
+	input {
+		width: 100%;
+		margin-bottom: 1rem;
+		&:last-of-type {
+			margin-bottom: 0rem;
+		}
+	}
 }
 
 // Generic Styles
