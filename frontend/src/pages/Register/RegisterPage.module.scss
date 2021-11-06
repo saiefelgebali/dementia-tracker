@@ -1,0 +1,18 @@
+@import "../../styles/variables";
+
+.select {
+	display: flex;
+	gap: 1rem;
+	width: 100%;
+	> button {
+		width: 100%;
+		background-color: $secondary;
+		&.active {
+			background-color: $primary;
+		}
+	}
+}
+
+.header {
+	padding: 1rem;
+}
