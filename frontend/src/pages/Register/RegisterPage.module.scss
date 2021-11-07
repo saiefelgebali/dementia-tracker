@@ -1,18 +1,35 @@
 @import "../../styles/variables";
 
-.select {
+.selectAccountType {
 	display: flex;
 	gap: 1rem;
-	width: 100%;
+
 	> button {
 		width: 100%;
-		background-color: $secondary;
-		&.active {
-			background-color: $primary;
-		}
 	}
 }
 
-.header {
+.formGroup {
+	height: 400px;
 	padding: 1rem;
+}
+
+.formPage {
+	display: flex;
+	flex-direction: column;
+	height: inherit;
+
+	> .navigation {
+		display: flex;
+		gap: 1rem;
+		align-self: flex-end;
+		justify-self: center;
+		height: 100%;
+
+		> button {
+			height: max-content;
+			align-self: flex-end;
+			width: 8rem;
+		}
+	}
 }

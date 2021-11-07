@@ -1,74 +1,124 @@
-import { Component } from "solid-js";
-import MultiPageForm from "../../components/MultiPageForm/MultiPageForm";
+import { Component, createSignal, Setter } from "solid-js";
+import Form from "../../components/Form/Form";
+import FormGroup from "../../components/FormGroup/FormGroup";
+import FormNavigation from "../../components/Form/FormNavigation";
+import FormInput from "../../components/FormInput/FormInput";
 import styles from "./RegisterPage.module.scss";
+import { FormPageProps } from "../../components/FormGroup/FormPage";
 
-const Page1 = () => {
+type AccountType = "patient" | "nurse";
+
+const Page1: Component<FormPageProps> = ({ pageNumber, setCurrentPage }) => {
+	const [type, setType] = createSignal<AccountType>("patient");
+
 	return (
-		<div className={styles.page}>
-			<h1>Account Type</h1>
-			<p>What type of account are you creating?</p>
-			<div class={styles.select}>
-				<button>Patient</button>
-				<button>Nurse</button>
+		<Form class={styles.formPage}>
+			<div>
+				<label>Account Type</label>
+				<div class={styles.selectAccountType}>
+					<button
+						type='button'
+						onClick={() => setType("patient")}
+						class={`${
+							type() === "patient" ? "primary" : "secondary"
+						}`}>
+						Patient
+					</button>
+					<button
+						type='button'
+						onClick={() => setType("nurse")}
+						class={`${
+							type() === "nurse" ? "primary" : "secondary"
+						}`}>
+						Nurse
+					</button>
+				</div>
 			</div>
-		</div>
+			<FormNavigation
+				class={styles.navigation}
+				page={pageNumber}
+				setPage={setCurrentPage}
+				next
+				nextLabel='Continue'
+			/>
+		</Form>
 	);
 };
 
-const Page2 = () => {
+const Page2: Component<FormPageProps> = ({ pageNumber, setCurrentPage }) => {
 	return (
-		<div className={styles.page}>
-			<h1>Personal Information</h1>
-			<label>Email</label>
-			<input type='email' required placeholder='someone@example.com' />
-		</div>
+		<Form class={styles.formPage}>
+			<div>
+				<label>Email</label>
+				<FormInput
+					type='email'
+					required
+					placeholder='someone@example.com'
+				/>
+			</div>
+			<FormNavigation
+				class={styles.navigation}
+				page={pageNumber}
+				setPage={setCurrentPage}
+				next
+				nextLabel='Continue'
+				back
+			/>
+		</Form>
 	);
 };
 
-const Page3 = () => {
+const Page3: Component<FormPageProps> = ({ pageNumber, setCurrentPage }) => {
 	return (
-		<div className={styles.page}>
-			<h1>Password</h1>
-			<label>Password</label>
-			<input
-				type='password'
-				minLength={5}
-				required
-				placeholder='Password'
+		<Form class={styles.formPage}>
+			<div>
+				<label>Password</label>
+				<input
+					type='password'
+					minLength={5}
+					required
+					placeholder='Password'
+				/>
+				<label>Confirm Password</label>
+
+				<input
+					type='password'
+					minLength={5}
+					required
+					placeholder='Confirm Password'
+					oninput={(e) => {
+						// check if passwords match
+					}}
+				/>
+			</div>
+			<FormNavigation
+				class={styles.navigation}
+				page={pageNumber}
+				setPage={setCurrentPage}
+				back
+				submit
 			/>
-			<label>Confirm</label>
-			<input
-				type='password'
-				minLength={5}
-				required
-				placeholder='Confirm Password'
-				oninput={(e) => {
-					if (
-						(e.currentTarget as HTMLInputElement).value !==
-						(
-							e.currentTarget
-								.previousElementSibling as HTMLInputElement
-						).value
-					) {
-						(e.currentTarget as HTMLInputElement).setCustomValidity(
-							"Passwords don't match"
-						);
-					}
-				}}
-			/>
-		</div>
+		</Form>
 	);
 };
 
 const RegisterPage: Component = () => {
+	const [page, setPage] = createSignal(0);
+
 	const pages = [Page1, Page2, Page3];
 
-	function onSubmit(e: Event) {
-		e.preventDefault();
-		const form = e.currentTarget as HTMLFormElement;
-	}
-
-	return <MultiPageForm onSubmit={onSubmit} pages={pages} />;
+	return (
+		<div>
+			<FormGroup
+				class={styles.formGroup}
+				maxWidth={600}
+				currentPage={page}
+				setCurrentPage={setPage}
+				pages={pages}>
+				<h2>Create an Account</h2>
+			</FormGroup>
+		</div>
+	);
 };
 
 export default RegisterPage;

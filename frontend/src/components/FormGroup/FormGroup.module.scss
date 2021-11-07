@@ -1,0 +1,12 @@
+.formGroup {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+
+	> .pages {
+		position: relative;
+		height: 100%;
+	}
+}

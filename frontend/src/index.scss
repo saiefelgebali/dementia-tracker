@@ -25,6 +25,7 @@ a {
 	-webkit-tap-highlight-color: transparent;
 }
 
+// form styling
 button {
 	cursor: pointer;
 	user-select: none;
@@ -35,30 +36,49 @@ button {
 	border-radius: $borderRadius;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-	border: none;
-	outline: none;
-	outline: 1px solid hsla(0, 0%, 50%, 0.4);
-	border-radius: 8px;
-	border-radius: $borderRadius;
-	padding: 1rem 0.75rem;
+form {
+	> * {
+		margin-bottom: 1rem;
+	}
 
-	&:focus {
-		outline-color: $primary;
+	> *:last-of-type {
+		margin-bottom: 0;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 0.5rem;
+	}
+
+	input:not([type="checkbox"], [type="radio"]) {
+		border: none;
+		outline: none;
+		outline: 1px solid hsla(0, 0%, 50%, 0.4);
+		border-radius: 8px;
+		border-radius: $borderRadius;
+		padding: 1rem 0.75rem;
+		width: 100%;
+		margin-bottom: 1rem;
+		&:last-of-type {
+			margin-bottom: 0;
+		}
+
+		&:focus {
+			outline-color: $primary;
+		}
+
+		&.invalid {
+			outline-color: $danger;
+		}
+
+		&.disabled,
+		&:disabled {
+			pointer-events: none;
+		}
 	}
 }
 
-input:invalid {
-	&:not(:placeholder-shown) {
-		outline-color: $danger;
-	}
-}
-input:valid {
-	outline-color: hsla(0, 0%, 10%, 0.4);
-}
-
+// general
 .title {
 	font-weight: 400;
 	font-size: 3rem;
@@ -69,24 +89,6 @@ input:valid {
 	font-size: 2rem;
 	color: hsl(0, 0%, 40%);
 }
-
-// form styling
-form {
-	label {
-		display: block;
-		margin-bottom: 0.5rem;
-	}
-
-	input {
-		width: 100%;
-		margin-bottom: 1rem;
-		&:last-of-type {
-			margin-bottom: 0rem;
-		}
-	}
-}
-
-// Generic Styles
 
 div.primary {
 	background-color: $primary;
