@@ -14,15 +14,18 @@ interface FormGroupProps {
 	setCurrentPage?: Setter<number>;
 	pages: Component<FormPageProps>[];
 	maxWidth?: number;
+	minHeight?: number;
 	class: string;
 }
 
 const FormGroup: Component<FormGroupProps> = (props) => {
 	let maxWidth = 600;
+	let minHeight = 400;
 	let [currentPage, setCurrentPage] = createSignal(0);
 	if (props.currentPage) currentPage = props.currentPage;
 	if (props.setCurrentPage) setCurrentPage = props.setCurrentPage;
 	if (props.maxWidth) maxWidth = props.maxWidth;
+	if (props.minHeight) minHeight = props.minHeight;
 
 	const pagePositions = props.pages.map((_, index) => {
 		const [get, set] = createSignal((index + currentPage()) * maxWidth);
@@ -37,9 +40,15 @@ const FormGroup: Component<FormGroupProps> = (props) => {
 	});
 
 	return (
-		<div class={`${styles.formGroup} ${props.class}`} style={{ maxWidth }}>
+		<div
+			class={`${styles.formGroup} ${props.class}`}
+			style={{ "max-width": `${maxWidth}px` }}>
 			<div class={styles.children}>{props.children}</div>
-			<div class={styles.pages}>
+			<div
+				class={styles.pages}
+				style={{
+					"min-height": `${minHeight}px`,
+				}}>
 				<For each={props.pages}>
 					{(page, index) => (
 						<FormPageWrapper position={pagePositions[index()].get}>

@@ -1,4 +1,5 @@
 import { Accessor, Setter, Component, createSignal, JSX } from "solid-js";
+import { filterObjectFunctions } from "../../utility";
 
 interface FormInputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	inputValue?: Accessor<string>;
@@ -30,7 +31,7 @@ const FormInput: Component<FormInputProps> = (props) => {
 
 	return (
 		<input
-			{...props}
+			{...filterObjectFunctions(props)}
 			classList={{ ...props.classList, invalid: !isValid() }}
 			value={inputValue && inputValue()}
 			onInput={onInput}

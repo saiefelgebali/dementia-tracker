@@ -34,6 +34,29 @@ button {
 	color: white;
 	padding: 1rem 2rem;
 	border-radius: $borderRadius;
+
+	&:disabled {
+		opacity: 0.5;
+		cursor: default;
+	}
+}
+
+fieldset {
+	border: none;
+	outline: none;
+	padding: 0px 1rem;
+	margin: 0;
+	overflow: auto;
+	flex-grow: 1;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	background-color: hsl(0, 0%, 0%, 0%);
+}
+::-webkit-scrollbar-thumb {
+	background-color: $secondary;
+	border-radius: $borderRadius;
 }
 
 form {
@@ -41,7 +64,7 @@ form {
 		margin-bottom: 1rem;
 	}
 
-	> *:last-of-type {
+	> *:last-child {
 		margin-bottom: 0;
 	}
 
@@ -88,6 +111,14 @@ form {
 .subtitle {
 	font-size: 2rem;
 	color: hsl(0, 0%, 40%);
+}
+
+.error {
+	color: $danger;
+	background-color: hsl(0, 50%, 90%);
+	outline: 1px solid $danger;
+	border-radius: $borderRadius;
+	padding: 1rem;
 }
 
 div.primary {

@@ -1,121 +1,31 @@
-import { Component, createSignal, Setter } from "solid-js";
-import Form from "../../components/Form/Form";
+import { Component, createSignal, For } from "solid-js";
 import FormGroup from "../../components/FormGroup/FormGroup";
-import FormNavigation from "../../components/Form/FormNavigation";
-import FormInput from "../../components/FormInput/FormInput";
+import { errors } from "./register.store";
 import styles from "./RegisterPage.module.scss";
-import { FormPageProps } from "../../components/FormGroup/FormPage";
-
-type AccountType = "patient" | "nurse";
-
-const Page1: Component<FormPageProps> = ({ pageNumber, setCurrentPage }) => {
-	const [type, setType] = createSignal<AccountType>("patient");
-
-	return (
-		<Form class={styles.formPage}>
-			<div>
-				<label>Account Type</label>
-				<div class={styles.selectAccountType}>
-					<button
-						type='button'
-						onClick={() => setType("patient")}
-						class={`${
-							type() === "patient" ? "primary" : "secondary"
-						}`}>
-						Patient
-					</button>
-					<button
-						type='button'
-						onClick={() => setType("nurse")}
-						class={`${
-							type() === "nurse" ? "primary" : "secondary"
-						}`}>
-						Nurse
-					</button>
-				</div>
-			</div>
-			<FormNavigation
-				class={styles.navigation}
-				page={pageNumber}
-				setPage={setCurrentPage}
-				next
-				nextLabel='Continue'
-			/>
-		</Form>
-	);
-};
-
-const Page2: Component<FormPageProps> = ({ pageNumber, setCurrentPage }) => {
-	return (
-		<Form class={styles.formPage}>
-			<div>
-				<label>Email</label>
-				<FormInput
-					type='email'
-					required
-					placeholder='someone@example.com'
-				/>
-			</div>
-			<FormNavigation
-				class={styles.navigation}
-				page={pageNumber}
-				setPage={setCurrentPage}
-				next
-				nextLabel='Continue'
-				back
-			/>
-		</Form>
-	);
-};
-
-const Page3: Component<FormPageProps> = ({ pageNumber, setCurrentPage }) => {
-	return (
-		<Form class={styles.formPage}>
-			<div>
-				<label>Password</label>
-				<input
-					type='password'
-					minLength={5}
-					required
-					placeholder='Password'
-				/>
-				<label>Confirm Password</label>
-
-				<input
-					type='password'
-					minLength={5}
-					required
-					placeholder='Confirm Password'
-					oninput={(e) => {
-						// check if passwords match
-					}}
-				/>
-			</div>
-			<FormNavigation
-				class={styles.navigation}
-				page={pageNumber}
-				setPage={setCurrentPage}
-				back
-				submit
-			/>
-		</Form>
-	);
-};
+import { RegisterPage1 } from "./RegisterPage1";
+import { RegisterPage2 } from "./RegisterPage2";
+import { RegisterPage3 } from "./RegisterPage3";
 
 const RegisterPage: Component = () => {
 	const [page, setPage] = createSignal(0);
 
-	const pages = [Page1, Page2, Page3];
+	const pages = [RegisterPage1, RegisterPage2, RegisterPage3];
 
 	return (
 		<div>
 			<FormGroup
 				class={styles.formGroup}
 				maxWidth={600}
+				minHeight={280}
 				currentPage={page}
 				setCurrentPage={setPage}
 				pages={pages}>
-				<h2>Create an Account</h2>
+				<h2 class={styles.header}>Create an Account</h2>
+				<div class={styles.errors}>
+					<For each={errors()}>
+						{(error) => <div class='error'>{error}</div>}
+					</For>
+				</div>
 			</FormGroup>
 		</div>
 	);

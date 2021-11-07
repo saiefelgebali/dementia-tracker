@@ -1,4 +1,5 @@
 import { Component, JSX, Setter } from "solid-js";
+import { filterObjectFunctions } from "../../utility";
 
 interface NavButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	page: number;
@@ -58,14 +59,7 @@ const FormNavigation: Component<
 	} = props;
 
 	return (
-		<div {...props}>
-			{back && (
-				<BackButton
-					page={page}
-					setPage={props.setPage}
-					label={backLabel}
-				/>
-			)}
+		<div {...filterObjectFunctions(props)}>
 			{next && (
 				<NextButton
 					page={page}
@@ -73,7 +67,16 @@ const FormNavigation: Component<
 					label={nextLabel}
 				/>
 			)}
+
 			{submit && <button>{submitLabel}</button>}
+
+			{back && (
+				<BackButton
+					page={page}
+					setPage={props.setPage}
+					label={backLabel}
+				/>
+			)}
 		</div>
 	);
 };

@@ -10,21 +10,33 @@
 }
 
 .formGroup {
-	height: 400px;
 	padding: 1rem;
+}
+
+.header,
+.errors {
+	padding: 0rem 1rem;
+}
+
+.errors {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 1rem;
 }
 
 .formPage {
 	display: flex;
 	flex-direction: column;
 	height: inherit;
+	justify-content: space-between;
 
 	> .navigation {
+		padding: 0rem 1rem;
+		margin-bottom: 1rem;
 		display: flex;
+		flex-direction: row-reverse;
 		gap: 1rem;
 		align-self: flex-end;
-		justify-self: center;
-		height: 100%;
 
 		> button {
 			height: max-content;

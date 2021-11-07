@@ -1,6 +1,7 @@
 import debug from "debug";
 import { RequestHandler } from "express-serve-static-core";
 import usersService from "../services/users.service";
+import { ValidationError } from "express-validator";
 
 const debugLog = debug("app:users-middleware");
 
@@ -10,7 +11,11 @@ class UsersMiddleware {
 		if (user)
 			return res
 				.status(400)
-				.send({ error: `A user with that email already exists.` });
+				.send({
+					errors: [
+						{ msg: `A user with that email already exists.` },
+					] as ValidationError[],
+				});
 		return next();
 	};
 
@@ -20,7 +25,9 @@ class UsersMiddleware {
 		next
 	) => {
 		if (res.locals.user._id === req.params.userId) return next();
-		return res.status(400).send({ error: `Invalid email` });
+		return res.status(400).send({
+			errors: [{ msg: `Invalid email` }] as ValidationError[],
+		});
 	};
 
 	validatePatchEmail: RequestHandler = async (req, res, next) => {
@@ -37,7 +44,11 @@ class UsersMiddleware {
 			return next();
 		}
 		return res.status(404).send({
-			error: `User ${req.params.userId} not found`,
+			errors: [
+				{
+					msg: `User ${req.params.userId} not found`,
+				},
+			] as ValidationError[],
 		});
 	};
 
@@ -51,9 +62,11 @@ class UsersMiddleware {
 			"permissionFlags" in req.body &&
 			req.body.permissionFlags !== res.locals.user.permissionFlags
 		) {
-			return res
-				.status(400)
-				.send({ errors: ["User cannot change permission flags"] });
+			return res.status(400).send({
+				errors: [
+					{ msg: "User cannot change permission flags" },
+				] as ValidationError[],
+			});
 		}
 		return next();
 	};

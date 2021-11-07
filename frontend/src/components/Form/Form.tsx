@@ -1,4 +1,5 @@
 import { Component, JSX } from "solid-js";
+import { filterObjectFunctions } from "../../utility";
 
 interface FormProps extends JSX.FormHTMLAttributes<HTMLFormElement> {
 	onSubmit?: (e: Event) => void;
@@ -6,7 +7,7 @@ interface FormProps extends JSX.FormHTMLAttributes<HTMLFormElement> {
 
 const Form: Component<FormProps> = (props) => {
 	return (
-		<form {...props} onSubmit={props.onSubmit}>
+		<form {...filterObjectFunctions(props)} onSubmit={props.onSubmit}>
 			{props.children}
 		</form>
 	);
