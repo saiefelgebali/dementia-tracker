@@ -1,4 +1,4 @@
-import { Component, JSX, Setter } from "solid-js";
+import { Accessor, Component, JSX, Setter } from "solid-js";
 import { filterObjectFunctions } from "../../utility";
 
 interface NavButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -43,6 +43,7 @@ interface FormNavigationProps extends NavButtonProps {
 	backLabel?: string;
 	submit?: boolean;
 	submitLabel?: string;
+	loading?: Accessor<boolean>;
 }
 
 const FormNavigation: Component<
@@ -56,6 +57,7 @@ const FormNavigation: Component<
 		nextLabel,
 		backLabel,
 		submitLabel = "Submit",
+		loading,
 	} = props;
 
 	return (
@@ -68,7 +70,13 @@ const FormNavigation: Component<
 				/>
 			)}
 
-			{submit && <button>{submitLabel}</button>}
+			{submit && (
+				<button disabled={(loading && loading()) || false}>
+					{loading && loading()
+						? "loading"
+						: submitLabel || submitLabel}
+				</button>
+			)}
 
 			{back && (
 				<BackButton

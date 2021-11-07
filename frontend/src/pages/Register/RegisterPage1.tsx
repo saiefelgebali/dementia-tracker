@@ -27,7 +27,7 @@ export const RegisterPage1: Component<FormPageProps> = ({
 		<Form class={styles.formPage}>
 			<div>
 				<fieldset disabled={loading()}>
-					<label>Account Type</label>
+					<label>Select account type</label>
 					<div class={styles.selectAccountType}>
 						<button
 							type='button'

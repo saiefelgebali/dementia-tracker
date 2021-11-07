@@ -5,6 +5,7 @@ import Form from "../../components/Form/Form";
 import FormNavigation from "../../components/Form/FormNavigation";
 import { FormPageProps } from "../../components/FormGroup/FormPage";
 import FormInput from "../../components/FormInput/FormInput";
+import { DEBUG } from "../../utility";
 import {
 	body,
 	loading,
@@ -68,7 +69,12 @@ export const RegisterPage3: Component<FormPageProps> = ({
 			// error creating user
 			if (response.status !== 201) {
 				const res = (await response.json()) as ResponseErrors;
-				setErrors(res.errors.map((e) => e.msg));
+				DEBUG && console.error(res);
+				setErrors(
+					res.errors.map(
+						(e) => `${e.param || ""}${e.param ? ": " : ""}${e.msg}`
+					)
+				);
 			}
 
 			// successful request
@@ -115,6 +121,7 @@ export const RegisterPage3: Component<FormPageProps> = ({
 				setPage={setCurrentPage}
 				back
 				submit
+				loading={loading}
 			/>
 		</Form>
 	);

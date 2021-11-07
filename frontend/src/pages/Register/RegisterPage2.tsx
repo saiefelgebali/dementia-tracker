@@ -19,7 +19,7 @@ export const RegisterPage2: Component<FormPageProps> = ({
 	return (
 		<Form class={styles.formPage}>
 			<fieldset disabled={loading()}>
-				<label>Email</label>
+				<label>Email address</label>
 				<FormInput
 					inputValue={email}
 					setInputValue={setEmail}
