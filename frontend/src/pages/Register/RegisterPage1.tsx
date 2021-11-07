@@ -1,3 +1,4 @@
+import { Link } from "solid-app-router";
 import { Component, createEffect, createSignal } from "solid-js";
 import Form from "../../components/Form/Form";
 import FormNavigation from "../../components/Form/FormNavigation";
@@ -53,8 +54,11 @@ export const RegisterPage1: Component<FormPageProps> = ({
 				page={pageNumber}
 				setPage={setCurrentPage}
 				next
-				nextLabel='Continue'
-			/>
+				nextLabel='Continue'>
+				<Link href='/auth/login' class='button secondary'>
+					Login Instead
+				</Link>
+			</FormNavigation>
 		</Form>
 	);
 };

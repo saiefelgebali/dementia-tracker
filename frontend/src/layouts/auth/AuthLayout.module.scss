@@ -6,10 +6,16 @@
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-	> div {
+	> div,
+	> form {
 		border-radius: $borderRadius;
 		box-shadow: 2px 2px 4px 4px hsl(0, 0%, 20%, 20%);
 		max-width: 600px;
 		width: 100%;
+		padding: 1rem;
+
+		> div {
+			padding: 0rem 1rem;
+		}
 	}
 }

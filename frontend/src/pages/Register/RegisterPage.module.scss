@@ -9,15 +9,6 @@
 	}
 }
 
-.formGroup {
-	padding: 1rem;
-}
-
-.header,
-.errors {
-	padding: 0rem 1rem;
-}
-
 .errors {
 	display: flex;
 	flex-wrap: wrap;
@@ -36,11 +27,8 @@
 		display: flex;
 		flex-direction: row-reverse;
 		gap: 1rem;
-		align-self: flex-end;
 
 		> button {
-			height: max-content;
-			align-self: flex-end;
 			width: 8rem;
 		}
 	}

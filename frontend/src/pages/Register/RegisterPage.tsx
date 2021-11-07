@@ -12,28 +12,26 @@ const RegisterPage: Component = () => {
 	const pages = [RegisterPage1, RegisterPage2, RegisterPage3];
 
 	return (
-		<div>
-			<FormGroup
-				class={styles.formGroup}
-				maxWidth={600}
-				minHeight={280}
-				currentPage={page}
-				setCurrentPage={setPage}
-				pages={pages}>
-				<h2 class={styles.header}>
-					Create a
-					<span class='primary'>
-						{body().permissionFlags === 2 ? " nurse " : " patient "}
-					</span>
-					account
-				</h2>
-				<div class={styles.errors}>
-					<For each={errors()}>
-						{(error) => <div class='error'>{error}</div>}
-					</For>
-				</div>
-			</FormGroup>
-		</div>
+		<FormGroup
+			class={styles.formGroup}
+			maxWidth={600}
+			minHeight={280}
+			currentPage={page}
+			setCurrentPage={setPage}
+			pages={pages}>
+			<h2 class={styles.header}>
+				Create a
+				<span class='primary'>
+					{body().permissionFlags === 2 ? " nurse " : " patient "}
+				</span>
+				account
+			</h2>
+			<div class={styles.errors}>
+				<For each={errors()}>
+					{(error) => <div class='error'>{error}</div>}
+				</For>
+			</div>
+		</FormGroup>
 	);
 };
 

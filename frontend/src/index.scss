@@ -26,7 +26,9 @@ a {
 }
 
 // form styling
-button {
+button,
+.button {
+	font-size: 0.8rem;
 	cursor: pointer;
 	user-select: none;
 	border: none;
@@ -34,6 +36,7 @@ button {
 	color: white;
 	padding: 1rem 2rem;
 	border-radius: $borderRadius;
+	text-align: center;
 
 	&:disabled {
 		opacity: 0.5;
@@ -44,7 +47,7 @@ button {
 fieldset {
 	border: none;
 	outline: none;
-	padding: 0px 1rem;
+	padding: 4px 1rem;
 	margin: 0;
 	overflow: auto;
 	flex-grow: 1;
@@ -139,6 +142,10 @@ span.primary {
 
 .flex {
 	display: flex;
+}
+
+.fill {
+	width: 100%;
 }
 
 .center {

@@ -85,6 +85,8 @@ const FormNavigation: Component<
 					label={backLabel}
 				/>
 			)}
+
+			{props.children}
 		</div>
 	);
 };
