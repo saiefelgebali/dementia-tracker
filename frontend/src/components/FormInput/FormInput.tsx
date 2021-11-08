@@ -1,5 +1,5 @@
 import { Accessor, Setter, Component, createSignal, JSX } from "solid-js";
-import { filterObjectFunctions } from "../../utility";
+import { filterObjectFunctions } from "../../utility/utility";
 
 interface FormInputProps extends JSX.InputHTMLAttributes<HTMLInputElement> {
 	inputValue?: Accessor<string>;

@@ -1,5 +1,5 @@
 import { Accessor, Component, JSX, Setter } from "solid-js";
-import { filterObjectFunctions } from "../../utility";
+import { filterObjectFunctions } from "../../utility/utility";
 
 interface NavButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {
 	page: number;

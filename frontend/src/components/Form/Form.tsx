@@ -1,5 +1,5 @@
 import { Component, JSX } from "solid-js";
-import { filterObjectFunctions } from "../../utility";
+import { filterObjectFunctions } from "../../utility/utility";
 
 interface FormProps extends JSX.FormHTMLAttributes<HTMLFormElement> {
 	onSubmit?: (e: Event) => void;

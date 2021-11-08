@@ -2,10 +2,10 @@ import { Component, createSignal } from "solid-js";
 import FormErrors from "../../components/FormErrors/FormErrors";
 import FormGroup from "../../components/FormGroup/FormGroup";
 import { body, errors } from "./register.store";
-import styles from "./RegisterPage.module.scss";
 import { RegisterPage1 } from "./RegisterPage1";
 import { RegisterPage2 } from "./RegisterPage2";
 import { RegisterPage3 } from "./RegisterPage3";
+import styles from "./RegisterPage.module.scss";
 
 const RegisterPage: Component = () => {
 	const [page, setPage] = createSignal(0);

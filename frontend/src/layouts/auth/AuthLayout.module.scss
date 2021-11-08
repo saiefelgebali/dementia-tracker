@@ -3,11 +3,14 @@
 @import "../../styles/mixins";
 
 .authLayout {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
+	overflow: hidden;
+
 	> div:last-child,
 	> form {
 		border-radius: $borderRadius;

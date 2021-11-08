@@ -5,7 +5,7 @@ import Form from "../../components/Form/Form";
 import FormNavigation from "../../components/Form/FormNavigation";
 import { FormPageProps } from "../../components/FormGroup/FormPage";
 import FormInput from "../../components/FormInput/FormInput";
-import { DEBUG } from "../../utility";
+import { DEBUG } from "../../utility/utility";
 import {
 	body,
 	loading,
