@@ -1,4 +1,5 @@
-import { Component, createSignal, For } from "solid-js";
+import { Component, createSignal } from "solid-js";
+import FormErrors from "../../components/FormErrors/FormErrors";
 import FormGroup from "../../components/FormGroup/FormGroup";
 import { body, errors } from "./register.store";
 import styles from "./RegisterPage.module.scss";
@@ -19,18 +20,14 @@ const RegisterPage: Component = () => {
 			currentPage={page}
 			setCurrentPage={setPage}
 			pages={pages}>
-			<h2 class={styles.header}>
+			<h2>
 				Create a
 				<span class='primary'>
 					{body().permissionFlags === 2 ? " nurse " : " patient "}
 				</span>
 				account
 			</h2>
-			<div class={styles.errors}>
-				<For each={errors()}>
-					{(error) => <div class='error'>{error}</div>}
-				</For>
-			</div>
+			<FormErrors errors={errors} />
 		</FormGroup>
 	);
 };

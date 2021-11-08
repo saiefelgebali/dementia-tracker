@@ -1,4 +1,6 @@
+@use "sass:math";
 @import "../../styles/variables";
+@import "../../styles/mixins";
 
 .authLayout {
 	display: flex;
@@ -6,16 +8,90 @@
 	align-items: center;
 	justify-content: center;
 	height: 100vh;
-	> div,
+	> div:last-child,
 	> form {
 		border-radius: $borderRadius;
 		box-shadow: 2px 2px 4px 4px hsl(0, 0%, 20%, 20%);
 		max-width: 600px;
 		width: 100%;
 		padding: 1rem;
+		background-color: white;
 
 		> div {
 			padding: 0rem 1rem;
 		}
+
+		@include breakpoint(xs) {
+			box-shadow: none;
+			border-radius: 0rem;
+		}
+	}
+}
+
+// Animations
+.backgroundContainer {
+	z-index: -20;
+	position: absolute;
+	display: grid;
+	align-items: center;
+	justify-content: center;
+	transform: rotate(-12deg) skew(-12deg);
+	@include breakpoint(xs) {
+		display: none;
+	}
+}
+
+$animSpeed: 2s;
+$baseHeight: 70px;
+$primary: $primary;
+$secondary: hsl(0, 0%, 75%);
+
+.slide1 {
+	$multiplier: 1.25;
+	background-color: $primary;
+	opacity: math.div(1, $multiplier);
+	width: 400px;
+	height: $baseHeight * $multiplier;
+	animation: SlideRL ($animSpeed * $multiplier) ease-in-out alternate infinite;
+}
+.slide2 {
+	$multiplier: 2;
+	background-color: $primary;
+	opacity: math.div(1, $multiplier);
+	width: 200px;
+	height: $baseHeight * $multiplier;
+	animation: SlideLR ($animSpeed * $multiplier) ease-in-out alternate infinite;
+}
+.slide3 {
+	$multiplier: 1.2;
+	background-color: $primary;
+	opacity: math.div(1, $multiplier);
+	width: 400px;
+	height: $baseHeight * $multiplier;
+	animation: SlideRL ($animSpeed * $multiplier) ease-in-out alternate infinite;
+}
+.slide4 {
+	$multiplier: 1.5;
+	background-color: $primary;
+	opacity: math.div(1, $multiplier);
+	width: 400px;
+	height: $baseHeight * $multiplier;
+	animation: SlideLR ($animSpeed * $multiplier) ease-in-out alternate infinite;
+}
+
+@keyframes SlideLR {
+	from {
+		transform: translateX(-100%);
+	}
+	to {
+		transform: translateX(100%);
+	}
+}
+@keyframes SlideRL {
+	from {
+		transform: translateX(100%);
+	}
+	to {
+		transform: translateX(-100%);
 	}
 }
