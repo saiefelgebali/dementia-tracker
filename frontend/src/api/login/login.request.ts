@@ -3,12 +3,12 @@ import { apiRequest } from "../common/common.request";
 import { APIRequest } from "../interface/api.request.type";
 import { LoginRequest, LoginResponse } from "./login.interface";
 
-export const loginRequest: APIRequest<LoginRequest, LoginResponse> = async (
+export const loginRequest: APIRequest<LoginRequest> = async (
 	body,
 	callbacks?
 ) =>
 	apiRequest(
-		`${api}/auth`,
+		"/auth",
 		{
 			method: "POST",
 			body: JSON.stringify(body),

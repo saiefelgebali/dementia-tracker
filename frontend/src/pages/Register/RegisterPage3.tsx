@@ -1,6 +1,5 @@
 import { Component, createEffect, createSignal } from "solid-js";
 import { APIResErrors } from "../../api/interface/api.res.errors.interface";
-import { RegisterResponse } from "../../api/register/register.interface";
 import { registerRequest } from "../../api/register/register.requests";
 import Form from "../../components/Form/Form";
 import FormNavigation from "../../components/Form/FormNavigation";
@@ -63,12 +62,14 @@ export const RegisterPage3: Component<FormPageProps> = ({
 		}
 
 		// request callbacks
-		const success = (res: RegisterResponse) => {
+		const success = (res: Response) => {
 			// redirect to login
 			window.location.href = "/auth/login";
 		};
 
-		const error = (res: APIResErrors) => {
+		const error = async (response: Response) => {
+			const res = (await response.json()) as APIResErrors;
+
 			// server errors
 			setErrors(
 				res.errors.map(

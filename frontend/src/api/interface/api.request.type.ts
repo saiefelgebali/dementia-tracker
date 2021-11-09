@@ -1,6 +1,6 @@
 import { APIRequestCallbacks } from "../common/common.request";
 
-export type APIRequest<Req, Res> = (
+export type APIRequest<Req> = (
 	body: Req,
-	callbacks?: APIRequestCallbacks<Res>
-) => Promise<Res>;
+	callbacks?: Partial<APIRequestCallbacks>
+) => Promise<Response | null>;

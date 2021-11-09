@@ -6,7 +6,7 @@ import { RegisterRequest, RegisterResponse } from "./register.interface";
 export const registerRequest: APIRequest<RegisterRequest, RegisterResponse> =
 	async (body, callbacks) =>
 		apiRequest(
-			`${api}/users`,
+			"/users",
 			{
 				method: "POST",
 				headers: {

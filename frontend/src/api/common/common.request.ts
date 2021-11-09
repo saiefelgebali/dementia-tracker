@@ -1,40 +1,43 @@
-import { APIResErrors } from "../interface/api.res.errors.interface";
+import { accessToken } from "../../store/app.store";
+import { DEBUG } from "../../utility/utility";
+import { api } from "../api";
 
-export type SuccessCallback<R> = (res: R) => void;
-export type ErrorCallback = (res: APIResErrors) => void;
+export type SuccessCallback = (res: Response) => void;
+export type ErrorCallback = (response: Response) => void;
 export type CatchCallback = (err: Error) => void;
 
-export interface APIRequestCallbacks<R> {
-	success: SuccessCallback<R>;
+export interface APIRequestCallbacks {
+	success: SuccessCallback;
 	error: ErrorCallback;
 	catchError: CatchCallback;
 }
 
-export async function apiRequest<R>(
-	url: RequestInfo,
+export async function apiRequest(
+	path: string,
 	init: RequestInit,
-	callbacks?: APIRequestCallbacks<R>
+	callbacks?: Partial<APIRequestCallbacks>
 ) {
 	// try request
 	try {
+		DEBUG && console.log("Fetching from ", path);
 		// fetch request
-		const response = await fetch(url, {
+		const res = await fetch(`${api}${path}`, {
 			...init,
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${accessToken()}`,
 				...init.headers,
 			},
 		});
-		const res = await response.json();
 
 		// error from server
-		if (response.status > 299) {
-			callbacks?.error && callbacks.error(res as APIResErrors);
+		if (res.status > 299) {
+			callbacks?.error && callbacks.error(res);
 		}
 
 		// successful request
-		else if (response.status <= 299) {
-			callbacks?.success && callbacks.success(res as R);
+		else if (res.status <= 299) {
+			callbacks?.success && callbacks.success(res);
 		}
 
 		return res;

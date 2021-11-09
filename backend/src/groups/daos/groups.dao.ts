@@ -15,8 +15,8 @@ class GroupsDao {
 		{
 			_id: String,
 			name: String,
-			nurses: [String],
-			patients: [String],
+			nurses: [{ type: String, ref: "Users" }],
+			patients: [{ type: String, ref: "Users" }],
 		},
 		{ id: false }
 	);
@@ -52,6 +52,8 @@ class GroupsDao {
 		})
 			.limit(limit)
 			.skip(offset)
+			.populate("patients")
+			.populate("nurses")
 			.exec();
 	}
 

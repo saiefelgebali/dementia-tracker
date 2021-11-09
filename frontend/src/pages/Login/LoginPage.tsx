@@ -24,7 +24,8 @@ const LoginPage: Component = () => {
 		const password = form.password.value;
 
 		// request callbacks
-		const success = (res: LoginResponse) => {
+		const success = async (response: Response) => {
+			const res = (await response.json()) as LoginResponse;
 			// save tokens
 			setAccessToken(res.accessToken);
 			setRefreshToken(res.refreshToken);
@@ -33,7 +34,8 @@ const LoginPage: Component = () => {
 			window.location.href = "/";
 		};
 
-		const error = (res: APIResErrors) => {
+		const error = async (response: Response) => {
+			const res = (await response.json()) as APIResErrors;
 			DEBUG && console.error(res);
 			setErrors(["Invalid email or password"]);
 		};
