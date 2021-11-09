@@ -3,6 +3,6 @@ interface ValidationError {
 	param: string;
 }
 
-export interface ResponseErrors {
+export interface APIResErrors {
 	errors: ValidationError[];
 }

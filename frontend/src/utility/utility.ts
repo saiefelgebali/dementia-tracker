@@ -1,4 +1,4 @@
-export const DEBUG = false;
+export const DEBUG = true;
 
 export function filterObjectFunctions(props: Object) {
 	return Object.fromEntries(
@@ -6,4 +6,13 @@ export function filterObjectFunctions(props: Object) {
 			([key, value]) => typeof value !== "function"
 		)
 	);
+}
+
+export function isJsonString(str: string) {
+	try {
+		JSON.parse(str);
+	} catch (e) {
+		return false;
+	}
+	return true;
 }

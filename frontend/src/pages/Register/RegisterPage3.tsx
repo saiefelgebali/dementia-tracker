@@ -1,11 +1,11 @@
 import { Component, createEffect, createSignal } from "solid-js";
-import { ResponseErrors } from "../../api/interface/error";
+import { APIResErrors } from "../../api/interface/api.res.errors.interface";
+import { RegisterResponse } from "../../api/register/register.interface";
 import { registerRequest } from "../../api/register/register.requests";
 import Form from "../../components/Form/Form";
 import FormNavigation from "../../components/Form/FormNavigation";
 import { FormPageProps } from "../../components/FormGroup/FormPage";
 import FormInput from "../../components/FormInput/FormInput";
-import { DEBUG } from "../../utility/utility";
 import {
 	body,
 	loading,
@@ -62,30 +62,31 @@ export const RegisterPage3: Component<FormPageProps> = ({
 			console.log(validationErrors);
 		}
 
-		// try request
-		try {
-			const response = await registerRequest(body());
+		// request callbacks
+		const success = (res: RegisterResponse) => {
+			// redirect to login
+			window.location.href = "/auth/login";
+		};
 
-			// error creating user
-			if (response.status !== 201) {
-				const res = (await response.json()) as ResponseErrors;
-				DEBUG && console.error(res);
-				setErrors(
-					res.errors.map(
-						(e) => `${e.param || ""}${e.param ? ": " : ""}${e.msg}`
-					)
-				);
-			}
+		const error = (res: APIResErrors) => {
+			// server errors
+			setErrors(
+				res.errors.map(
+					(e) => `${e.param || ""}${e.param ? ": " : ""}${e.msg}`
+				)
+			);
+		};
 
-			// successful request
-			else if (response.status === 201) {
-				// redirect to login
-				window.location.href = "/auth/login";
-			}
-		} catch (error) {
+		const catchError = (error: Error) => {
 			// client error
-			setErrors([(error as Error).message]);
-		}
+			setErrors([error.message]);
+		};
+
+		await registerRequest(body(), {
+			success,
+			error,
+			catchError,
+		});
 
 		// stop loading
 		setLoading(false);

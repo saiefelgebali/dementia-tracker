@@ -1,10 +1,12 @@
 import { Link } from "solid-app-router";
 import { Component } from "solid-js";
-import { ResponseErrors } from "../../api/interface/error";
+import { APIResErrors } from "../../api/interface/api.res.errors.interface";
+import { LoginResponse } from "../../api/login/login.interface";
 import { loginRequest } from "../../api/login/login.request";
 import Form from "../../components/Form/Form";
 import FormErrors from "../../components/FormErrors/FormErrors";
 import FormInput from "../../components/FormInput/FormInput";
+import { setAccessToken, setRefreshToken } from "../../store/app.store";
 import { DEBUG } from "../../utility/utility";
 import { errors, loading, setErrors, setLoading } from "./login.store";
 import styles from "./LoginPage.module.scss";
@@ -18,29 +20,29 @@ const LoginPage: Component = () => {
 
 		// gather params
 		const form = e.target as HTMLFormElement;
-		const email = form.email;
-		const password = form.password;
+		const email = form.email.value;
+		const password = form.password.value;
 
-		// try request
-		try {
-			const response = await loginRequest({ email, password });
+		// request callbacks
+		const success = (res: LoginResponse) => {
+			// save tokens
+			setAccessToken(res.accessToken);
+			setRefreshToken(res.refreshToken);
 
-			// error logging in
-			if (response.status !== 201) {
-				const res = (await response.json()) as ResponseErrors;
-				DEBUG && console.error(res);
-				setErrors(["Invalid email or password"]);
-			}
+			// redirect to home page
+			window.location.href = "/";
+		};
 
-			// successful request
-			else if (response.status === 201) {
-				// redirect to home page
-				window.location.href = "/";
-			}
-		} catch (error) {
-			// client error
-			setErrors([(error as Error).message]);
-		}
+		const error = (res: APIResErrors) => {
+			DEBUG && console.error(res);
+			setErrors(["Invalid email or password"]);
+		};
+
+		const catchError = (error: Error) => {
+			setErrors([error.message]);
+		};
+
+		await loginRequest({ email, password }, { success, error, catchError });
 
 		// stop loading
 		setLoading(false);
@@ -55,9 +57,19 @@ const LoginPage: Component = () => {
 
 			<fieldset disabled={loading()}>
 				<label>Email</label>
-				<FormInput type='email' required placeholder='Email' />
+				<FormInput
+					type='email'
+					name='email'
+					required
+					placeholder='Email'
+				/>
 				<label>Password</label>
-				<FormInput type='password' required placeholder='Password' />
+				<FormInput
+					type='password'
+					name='password'
+					required
+					placeholder='Password'
+				/>
 			</fieldset>
 
 			<div class={styles.actions}>

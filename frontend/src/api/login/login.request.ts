@@ -1,11 +1,17 @@
 import { api } from "../api";
-import { LoginRequest } from "./login.interface";
+import { apiRequest } from "../common/common.request";
+import { APIRequest } from "../interface/api.request.type";
+import { LoginRequest, LoginResponse } from "./login.interface";
 
-export const loginRequest = async (body: LoginRequest) =>
-	fetch(`${api}/auth`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
+export const loginRequest: APIRequest<LoginRequest, LoginResponse> = async (
+	body,
+	callbacks?
+) =>
+	apiRequest(
+		`${api}/auth`,
+		{
+			method: "POST",
+			body: JSON.stringify(body),
 		},
-		body: JSON.stringify(body),
-	});
+		callbacks
+	);

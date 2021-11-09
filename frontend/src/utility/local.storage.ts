@@ -1,3 +1,5 @@
+import { isJsonString } from "./utility";
+
 export type LocalStorageType = string | number | object | null;
 
 class LocalStorage {
@@ -35,7 +37,8 @@ class LocalStorage {
 		// parse string to expected type
 		if (stringValue === null) parseValue = null;
 		else if (parseFloat(stringValue)) parseValue = parseFloat(stringValue);
-		else if (JSON.parse(stringValue)) parseValue = JSON.parse(stringValue);
+		else if (isJsonString(stringValue))
+			parseValue = JSON.parse(stringValue);
 
 		return parseValue as T;
 	}
