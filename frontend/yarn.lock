@@ -257,6 +257,30 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@googlemaps/js-api-loader@^1.11.1":
+  version "1.12.9"
+  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.12.9.tgz#d9fdd8273aef27590d9254f9ae0573e9919ae4d1"
+  integrity sha512-pa0T5mCvmWIs3I7LGFm8naFhIsEvHMDG5IENJ67uhMLWLFy821L95V1Ez1Lo/Jvjh06UMg9L4DCiCxsmwnFglw==
+  dependencies:
+    fast-deep-equal "^3.1.3"
+
+"@googlemaps/map-loader@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@googlemaps/map-loader/-/map-loader-0.2.0.tgz#10001466bc4afbc786dcf06fdf5a03085dee7a76"
+  integrity sha512-YXEXoD3XtXFdA4Y9we6bQWo/mhAPWFT25HE/Op6wr6qgb8QmyHXH/xkNZk8lRe4qKxMP2AQWjTM+D2tltiNfZA==
+  dependencies:
+    "@googlemaps/js-api-loader" "^1.11.1"
+
+"@googlemaps/types@^3.44.4":
+  version "3.44.4"
+  resolved "https://registry.yarnpkg.com/@googlemaps/types/-/types-3.44.4.tgz#1cafb787e3d18246b6767c09bdf7662e0e4a5bd9"
+  integrity sha512-0IwfqnWFpv6scV2RdTcNve5Nedz8vDjHjpjJBztbkgvgdZJJUcPF1SRnnNUP2n9xmO9wWhaVcVidinb7rI/IjA==
+
+"@types/google.maps@^3.46.1":
+  version "3.46.1"
+  resolved "https://registry.yarnpkg.com/@types/google.maps/-/google.maps-3.46.1.tgz#a1a3bf99402022ea0039cc8c3230a1f9a216e46e"
+  integrity sha512-GAa5ZWYgXG50yLXybb7A824esGm/L0LKHS7qD0qkP0IA/Qp5r922P9tmYcbCkGEf3Zgf7Ukbp7l08/IGIJuQwQ==
+
 "@types/minimist@^1.2.0":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.2.tgz#ee771e2ba4b3dc5b372935d549fd9617bf345b8c"
@@ -769,7 +793,7 @@ extsprintf@^1.2.0:
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
-fast-deep-equal@^3.1.1:
+fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
   integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==

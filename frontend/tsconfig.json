@@ -8,6 +8,7 @@
 		"esModuleInterop": true,
 		"jsx": "preserve",
 		"jsxImportSource": "solid-js",
-		"types": ["vite/client", "mocha"]
+		"types": ["vite/client"],
+		"typeRoots": ["./node_modules/@types"]
 	}
 }

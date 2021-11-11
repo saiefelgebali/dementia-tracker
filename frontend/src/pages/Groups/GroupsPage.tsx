@@ -1,8 +1,7 @@
 import { Link } from "solid-app-router";
-import { Component, createResource, For } from "solid-js";
+import { Component, createResource, createSignal, For } from "solid-js";
 import { getGroups } from "../../api/groups/get.groups";
 import { Group } from "../../api/groups/groups.interface";
-import styles from "./GroupsPage.module.scss";
 
 const GroupItem: Component<{ group: Group }> = ({ group }) => {
 	return (
@@ -14,8 +13,11 @@ const GroupItem: Component<{ group: Group }> = ({ group }) => {
 };
 
 const GroupsPage: Component = () => {
+	const [loading, setLoading] = createSignal(false);
+
 	const [groups] = createResource<Group[]>(
 		async (k, prev) => {
+			setLoading(true);
 			const error = async (response: Response) => {
 				console.error(await response.json());
 			};
@@ -33,6 +35,8 @@ const GroupsPage: Component = () => {
 				newGroups = await response.json();
 			}
 
+			setLoading(false);
+
 			return [...prev(), ...newGroups];
 		},
 		{ initialValue: [] }
@@ -43,7 +47,7 @@ const GroupsPage: Component = () => {
 			<div class='header'>
 				<h1>Groups</h1>
 			</div>
-			<div class={styles.createGroup}>
+			<div class='mb'>
 				<button>Create a new group</button>
 			</div>
 
@@ -51,6 +55,7 @@ const GroupsPage: Component = () => {
 				<For each={groups()}>
 					{(group) => <GroupItem group={group} />}
 				</For>
+				{loading() && <div class='list-item'>Loading...</div>}
 			</div>
 		</>
 	);
