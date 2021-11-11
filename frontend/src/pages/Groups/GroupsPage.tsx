@@ -1,54 +1,58 @@
-import { Component } from "solid-js";
+import { Link } from "solid-app-router";
+import { Component, createResource, For } from "solid-js";
 import { getGroups } from "../../api/groups/get.groups";
-import { GetGroupsResponse } from "../../api/groups/groups.interface";
+import { Group } from "../../api/groups/groups.interface";
 import styles from "./GroupsPage.module.scss";
 
-const Group: Component = () => {
+const GroupItem: Component<{ group: Group }> = ({ group }) => {
 	return (
-		<div class={styles.group}>
-			<div>Group with the homies</div>
-			<div>12 Users</div>
-		</div>
+		<Link href={`/groups/${group._id}`} class='list-item'>
+			<div>{group.name}</div>
+			<div>{group.patients.length} Users</div>
+		</Link>
 	);
 };
 
 const GroupsPage: Component = () => {
-	const success = async (response: Response) => {
-		const res = (await response.json()) as GetGroupsResponse;
-		console.log(res);
-	};
-	const error = (res: Response) => {
-		console.log(res);
-	};
-	const catchError = (res: Error) => {
-		console.log(res);
-	};
+	const [groups] = createResource<Group[]>(
+		async (k, prev) => {
+			const error = async (response: Response) => {
+				console.error(await response.json());
+			};
 
-	const res = getGroups(
-		{ offset: 0, limit: 10 },
-		{
-			success,
-			error,
-			catchError,
-		}
+			const catchError = (error: Error) => {
+				console.error(error.message);
+			};
+
+			const response = await getGroups({}, { error, catchError });
+
+			let newGroups: Group[] = [];
+
+			// success
+			if (response?.ok) {
+				newGroups = await response.json();
+			}
+
+			return [...prev(), ...newGroups];
+		},
+		{ initialValue: [] }
 	);
 
 	return (
-		<div class={styles.p}>
-			<div class={styles.header}>
+		<>
+			<div class='header'>
 				<h1>Groups</h1>
 			</div>
 			<div class={styles.createGroup}>
 				<button>Create a new group</button>
 			</div>
 
-			<div class={styles.groupList}>
-				<Group />
-				<Group />
-				<Group />
-				<Group />
+			<div class='list'>
+				<For each={groups()}>
+					{(group) => <GroupItem group={group} />}
+				</For>
 			</div>
-		</div>
+		</>
 	);
 };
 

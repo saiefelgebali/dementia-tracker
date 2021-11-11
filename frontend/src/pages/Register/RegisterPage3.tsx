@@ -1,6 +1,6 @@
 import { Component, createEffect, createSignal } from "solid-js";
 import { APIResErrors } from "../../api/interface/api.res.errors.interface";
-import { registerRequest } from "../../api/register/register.requests";
+import { registerRequest } from "../../api/users/register.requests";
 import Form from "../../components/Form/Form";
 import FormNavigation from "../../components/Form/FormNavigation";
 import { FormPageProps } from "../../components/FormGroup/FormPage";

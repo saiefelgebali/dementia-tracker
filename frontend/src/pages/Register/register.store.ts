@@ -1,5 +1,5 @@
 import { createSignal } from "solid-js";
-import { RegisterRequest } from "../../api/register/register.interface";
+import { RegisterRequest } from "../../api/users/register.interface";
 
 // state
 export const [body, setBody] = createSignal<RegisterRequest>({

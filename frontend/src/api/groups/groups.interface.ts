@@ -1,8 +1,10 @@
+import { User } from "../users/users.interface";
+
 export interface Group {
 	_id: string;
 	name: string;
-	nurses: string[];
-	patients: string[];
+	nurses: User[];
+	patients: User[];
 }
 
 export interface GetGroupsRequest {

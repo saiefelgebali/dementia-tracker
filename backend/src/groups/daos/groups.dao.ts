@@ -58,7 +58,11 @@ class GroupsDao {
 	}
 
 	async getGroupById(groupId: string) {
-		return this.Group.findOne({ _id: groupId }).populate("Group").exec();
+		return this.Group.findOne({ _id: groupId })
+			.populate("Group")
+			.populate("patients")
+			.populate("nurses")
+			.exec();
 	}
 
 	async updateGroupById(

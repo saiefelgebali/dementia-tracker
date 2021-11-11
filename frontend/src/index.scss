@@ -103,6 +103,11 @@ form {
 	color: hsl(0, 0%, 0%);
 }
 
+.header {
+	padding: 0rem 1rem;
+	color: $primary;
+}
+
 .subtitle {
 	font-size: 2rem;
 	color: hsl(0, 0%, 40%);
@@ -154,6 +159,30 @@ span.primary {
 
 .hidden {
 	display: none;
+}
+
+// lists
+.list {
+	display: flex;
+	flex-direction: column;
+
+	.list-item {
+		display: flex;
+		justify-content: space-between;
+		cursor: pointer;
+		user-select: none;
+		padding: 1.8rem 1rem;
+		border-bottom: 2px solid $primary;
+		> div {
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+
+		&:hover,
+		&:focus {
+			background-color: #f5f5f5;
+		}
+	}
 }
 
 .main {
