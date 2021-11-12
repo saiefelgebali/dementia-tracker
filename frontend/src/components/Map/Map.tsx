@@ -17,6 +17,7 @@ async function initMap(
 ) {
 	// options for initial render
 	const mapOptions: google.maps.MapOptions = {
+		clickableIcons: false,
 		center:
 			(options?.polygonInitial && options.polygonInitial[0]) ||
 			castPosition,

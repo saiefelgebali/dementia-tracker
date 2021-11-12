@@ -41,7 +41,7 @@ const GroupPage: Component = () => {
 
 			setLoading(false);
 
-			return group || null;
+			return group;
 		},
 		{ initialValue: null }
 	);
@@ -79,7 +79,7 @@ const GroupPage: Component = () => {
 			<div className='header'>
 				<h2>Patients</h2>
 			</div>
-			<button>Add patient</button>
+			<button class='mb'>Add patient</button>
 
 			<div class='list'>
 				<For each={group()?.patients}>
