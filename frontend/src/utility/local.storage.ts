@@ -1,6 +1,4 @@
-import { isJsonString } from "./utility";
-
-export type LocalStorageType = string | number | object | null;
+type LocalStorageType = string | number | object | null;
 
 class LocalStorage {
 	private appTag = "DT";

@@ -1,5 +1,5 @@
 import { Accessor, createSignal } from "solid-js";
-import localStorage, { LocalStorageType } from "./local.storage";
+import localStorage from "./local.storage";
 
 // Signal linked to local storage
 export function createSignalPersist(
