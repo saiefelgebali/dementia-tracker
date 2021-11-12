@@ -31,6 +31,28 @@ class JwtMiddleware {
 	};
 
 	/**
+	 * Validate the JWT's expiration date makes it valid
+	 */
+	validJWTIgnoreExpiration: RequestHandler = (req, res, next) => {
+		if (req.headers.authorization) {
+			try {
+				const authorization = req.headers.authorization.split(" ");
+				if (authorization[0] !== "Bearer")
+					return res.status(401).send();
+				res.locals.jwt = jwt.verify(authorization[1], jwtSecret, {
+					ignoreExpiration: true,
+				}) as Jwt;
+				return next();
+			} catch (error) {
+				// JWT Verification was unsuccessful
+				// Return 403 Forbidden
+				return res.status(403).send();
+			}
+		}
+		return res.status(401).send();
+	};
+
+	/**
 	 * Verify if the refreshToken field is present
 	 */
 	verifyRefreshBodyField: RequestHandler = (req, res, next) => {

@@ -2,6 +2,7 @@ import {
 	accessToken,
 	refreshToken,
 	setAccessToken,
+	setRefreshToken,
 } from "../../store/app.store";
 import { DEBUG } from "../../utility/utility";
 import { api } from "../api";
@@ -71,8 +72,6 @@ export async function apiRequest(
 				// window.location.href = "/auth/login";
 			}
 
-			console.log(refreshToken());
-
 			// make refresh request
 			await refreshRequest(
 				{
@@ -84,6 +83,7 @@ export async function apiRequest(
 						const refreshRes =
 							(await res.json()) as RefreshResponse;
 						setAccessToken(refreshRes.accessToken);
+						setRefreshToken(refreshRes.refreshToken);
 
 						// make request again
 						apiRequestNoAuth(path, init, callbacks);
