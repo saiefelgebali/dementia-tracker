@@ -1,7 +1,15 @@
-import { api } from "../api";
 import { apiRequest } from "../common/common.request";
 import { APIRequest } from "../interface/api.request.type";
-import { LoginRequest, LoginResponse } from "./login.interface";
+
+export interface LoginRequest {
+	email: string;
+	password: string;
+}
+
+export interface LoginResponse {
+	accessToken: string;
+	refreshToken: string;
+}
 
 export const loginRequest: APIRequest<LoginRequest> = async (
 	body,

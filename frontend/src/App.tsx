@@ -12,7 +12,7 @@ const App: Component = () => {
 		<Router>
 			<Routes>
 				<Route path='/' component={MainLayout}>
-					{/* <Route path='/' component={HomePage} /> */}
+					<Route path='/' component={GroupsPage} />
 					{/* <Route path='/home' component={HomePage} /> */}
 					{/* <Route path='/buy' component={HomePage} /> */}
 					<Route path='/groups' component={GroupsPage} />

@@ -30,17 +30,10 @@ class LocalStorage {
 		this.storage.setItem(this.parseKey(key), stringValue);
 	}
 
-	public get<T extends LocalStorageType>(key: string): T {
-		const stringValue = this.storage.getItem(this.parseKey(key));
-		let parseValue: LocalStorageType = stringValue;
+	public get(key: string): string | null {
+		const value = this.storage.getItem(this.parseKey(key));
 
-		// parse string to expected type
-		if (stringValue === null) parseValue = null;
-		else if (parseFloat(stringValue)) parseValue = parseFloat(stringValue);
-		else if (isJsonString(stringValue))
-			parseValue = JSON.parse(stringValue);
-
-		return parseValue as T;
+		return value;
 	}
 
 	public remove(key: string) {

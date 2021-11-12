@@ -87,8 +87,12 @@ describe("test group endpoints", () => {
 			expect(res.status).to.equal(200);
 			expect(res.body).to.be.an("object");
 			expect(res.body.name).to.be.equal(group.body.name);
-			expect(res.body.nurses).to.be.deep.equal(group.body.nurses);
-			expect(res.body.patients).to.be.deep.equal(group.body.patients);
+			expect(res.body.nurses.map((n: any) => n._id)).to.be.deep.equal(
+				group.body.nurses
+			);
+			expect(res.body.patients.map((p: any) => p._id)).to.be.deep.equal(
+				group.body.patients
+			);
 		});
 
 		it("remove patient from group", async () => {
