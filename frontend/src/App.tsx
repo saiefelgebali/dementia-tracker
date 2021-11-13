@@ -1,4 +1,4 @@
-import { Component } from "solid-js";
+import { Component, createResource } from "solid-js";
 import { Router, Route, Routes } from "solid-app-router";
 import AuthLayout from "./layouts/auth/AuthLayout";
 import RegisterPage from "./pages/Register/RegisterPage";
@@ -7,8 +7,25 @@ import GroupsPage from "./pages/Groups/GroupsPage";
 import MainLayout from "./layouts/main/MainLayout";
 import GroupPage from "./pages/Group/GroupPage";
 import UserPage from "./pages/User/UserPage";
+import { User } from "./api/users/users.interface";
+import { getMe } from "./api/users/get.me.request";
+import { accessToken, setMe } from "./store/app.store";
 
 const App: Component = () => {
+	const [meResource] = createResource<User | undefined>(async () => {
+		const token = accessToken();
+
+		if (!token) return;
+
+		const res = await getMe({ accessToken: token });
+
+		if (res?.status === 200) {
+			const meUser = (await res.json()) as User;
+			setMe(meUser);
+			return meUser;
+		}
+	});
+
 	return (
 		<Router>
 			<Routes>

@@ -22,6 +22,67 @@
 		max-width: $breakpoint-sm;
 		width: 100%;
 		color: white;
+		padding: 1rem;
+
+		.navItem {
+			user-select: none;
+		}
+	}
+}
+
+.dropdown {
+	position: relative;
+	user-select: none;
+	display: flex;
+	align-items: flex-end;
+	gap: 0.5rem;
+
+	&::after {
+		content: "";
+		border: 0.35rem solid transparent;
+		border-top-color: white;
+		margin-left: 0.25em;
+		transform: translateY(0.15em);
+	}
+
+	&:hover,
+	&:focus-within {
+		.dropdownMenu {
+			visibility: visible;
+			opacity: 1;
+			display: block;
+		}
+	}
+
+	.dropdownMenu {
+		position: absolute;
+		top: 100%;
+		background-color: #fff;
+		border-radius: 4px;
+		box-shadow: 0 0.15em 0.25em rgba(black, 0.25);
+		padding: $borderRadius 0;
+		min-width: 15ch;
+		padding: 0.5rem;
+		color: black;
+
+		opacity: 0;
+		visibility: hidden;
+		transition: 280ms all 120ms ease-out;
+
+		> * {
+			padding: 0.75rem 1rem;
+		}
+
+		a {
+			color: $primary;
+			font-weight: 500;
+			cursor: pointer;
+			border-radius: $borderRadius;
+			display: block;
+			&:hover {
+				background-color: hsl(0, 0%, 90%);
+			}
+		}
 	}
 }
 
