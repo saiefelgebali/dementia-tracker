@@ -26,6 +26,11 @@ class UsersController {
 		return res.status(200).send(user);
 	};
 
+	getMe: RequestHandler = async (req, res) => {
+		const user = await usersService.getUserByEmail(res.locals.jwt.email);
+		return res.status(200).send(user);
+	};
+
 	createUser: RequestHandler = async (req, res) => {
 		debugLog(`hashing password...`);
 		req.body.password = await hash(req.body.password, passwordSalt);

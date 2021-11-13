@@ -48,6 +48,19 @@ describe("test user endpoints", () => {
 	});
 
 	describe("with a valid access token", () => {
+		it("get me", async () => {
+			const res = await request
+				.get(`/users/me`)
+				.set({ Authorization: `Bearer ${patient.accessToken}` })
+				.send();
+			expect(res.status).to.equal(200);
+			expect(res.body).to.not.be.empty;
+			expect(res.body).to.be.an("object");
+			expect(res.body._id).to.be.a("string");
+			expect(res.body._id).to.equal(patient.id);
+			expect(res.body.email).to.equal(patient.body.email);
+		});
+
 		it("get user", async () => {
 			const res = await request
 				.get(`/users/${patient.id}`)

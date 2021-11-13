@@ -37,6 +37,10 @@ export class UserRoutes extends CommonRoutesConfig {
 				usersController.createUser
 			);
 
+		this.app
+			.route("/users/me")
+			.get(jwtMiddleware.validJWTNeeded, usersController.getMe);
+
 		this.app.param("userId", usersMiddleware.extractUserId);
 		this.app
 			.route("/users/:userId")

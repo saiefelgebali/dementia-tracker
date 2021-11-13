@@ -1,8 +1,18 @@
-import { Component, createEffect } from "solid-js";
+import { Component, createEffect, createSignal } from "solid-js";
 import { GoogleMap, MapsJSAPIOptions } from "@googlemaps/map-loader";
 import { MapLoaderOptions } from "@googlemaps/map-loader/dist/map-loader";
 import { googleMapsAPIKey } from "../../api.secret";
 import styles from "./Map.module.scss";
+
+type MapsCallback = (
+	map: google.maps.Map,
+	polygon: google.maps.Polygon
+) => void;
+
+interface MapProps {
+	polygonInitial?: google.maps.LatLngLiteral[];
+	callback?: MapsCallback;
+}
 
 const castPosition: google.maps.LatLngLiteral = {
 	lat: 52.1780726,
@@ -53,8 +63,6 @@ async function initMap(
 		apiOptions,
 	};
 
-	// add polygon control
-
 	const mapLoader = new GoogleMap();
 
 	const map = (await mapLoader.initMap(mapLoaderOptions)) as google.maps.Map;
@@ -77,16 +85,6 @@ async function initMap(
 	callback && callback(map, polygon);
 
 	return map;
-}
-
-type MapsCallback = (
-	map: google.maps.Map,
-	polygon: google.maps.Polygon
-) => void;
-
-interface MapProps {
-	polygonInitial?: google.maps.LatLngLiteral[];
-	callback?: MapsCallback;
 }
 
 const Map: Component<MapProps> = ({ callback, polygonInitial }) => {
