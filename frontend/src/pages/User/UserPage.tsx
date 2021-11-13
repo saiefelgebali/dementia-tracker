@@ -1,21 +1,21 @@
 import { useParams } from "solid-app-router";
-import { Component, createResource, createSignal, For } from "solid-js";
+import {
+	Component,
+	createEffect,
+	createResource,
+	createSignal,
+	For,
+} from "solid-js";
+import { deleteUserDataRequest } from "../../api/users/delete.user.data.request";
 import { getUserDataRequest } from "../../api/users/get.user.data.request";
 import { getUserRequest } from "../../api/users/get.user.request";
 import { User, UserData } from "../../api/users/users.interface";
 import Map from "../../components/Map/Map";
 
-const DataItem: Component<{ data: UserData }> = ({ data }) => {
-	return (
-		<div class='list-item'>
-			<div>{data.location}</div>
-		</div>
-	);
-};
-
 const UserPage: Component = () => {
 	const { id } = useParams();
 	const [loading, setLoading] = createSignal(false);
+	const [map, setMap] = createSignal<google.maps.Map>();
 
 	const [user] = createResource<User | null>(async (k, prev) => {
 		setLoading(true);
@@ -42,33 +42,86 @@ const UserPage: Component = () => {
 		return user;
 	});
 
-	const [data] = createResource<UserData[] | null>(async (k, prev) => {
-		setLoading(true);
+	const [data, { mutate }] = createResource<UserData[]>(
+		async (k, prev) => {
+			setLoading(true);
 
-		const error = async (response: Response) => {
-			console.error(await response.json());
-		};
+			const error = async (response: Response) => {
+				console.error(await response.json());
+			};
 
-		const catchError = (error: Error) => {
-			console.error(error.message);
-		};
+			const catchError = (error: Error) => {
+				console.error(error.message);
+			};
 
-		const response = await getUserDataRequest(
-			{ id },
-			{ error, catchError }
-		);
+			const response = await getUserDataRequest(
+				{ id },
+				{ error, catchError }
+			);
 
-		let userData: UserData[] | null = null;
+			let userData: UserData[] = [];
 
-		// success
-		if (response?.ok) {
-			userData = await response.json();
+			// success
+			if (response?.ok) {
+				userData = await response.json();
+			}
+
+			setLoading(false);
+
+			return userData;
+		},
+		{
+			initialValue: [],
+		}
+	);
+
+	createEffect(() => {
+		const currentMap = map();
+		if (!currentMap) return;
+
+		function addUserDataPath(map: google.maps.Map) {
+			if (!data) return;
+
+			const path = new google.maps.Polyline({
+				map,
+			});
+
+			const userPath = data()
+				.map((d) => {
+					const latLng = d.location.split(" ");
+					if (!latLng || latLng.length !== 2) return null;
+					return {
+						lat: parseFloat(latLng[0]),
+						lng: parseFloat(latLng[1]),
+					} as google.maps.LatLngLiteral;
+				})
+				.filter((d) => d !== null) as google.maps.LatLngLiteral[];
+			path.setPath(userPath);
 		}
 
-		setLoading(false);
-
-		return userData;
+		addUserDataPath(currentMap);
 	});
+
+	const DataItem: Component<{ data: UserData }> = ({ data }) => {
+		async function deleteData() {
+			// remove from list
+			mutate((userData) => userData?.filter((d) => d._id !== data._id));
+
+			// make delete request
+			const res = await deleteUserDataRequest({ id, dataId: data._id });
+
+			if (res?.status !== 204) {
+				console.log("Could not delete user data");
+			}
+		}
+
+		return (
+			<div class='list-item'>
+				<div>{data.location}</div>
+				<button onClick={deleteData}>Delete</button>
+			</div>
+		);
+	};
 
 	return (
 		<>
@@ -79,8 +132,10 @@ const UserPage: Component = () => {
 			<div className='header'>
 				<h2>Path</h2>
 			</div>
+
 			<Map
-			// polygonInitial={[{ lat: 52.1780726, lng: 0.1349691402320342 }]}
+				callback={(map) => setMap(map)}
+				// polygonInitial={[{ lat: 52.1780726, lng: 0.1349691402320342 }]}
 			/>
 
 			<div className='header'>

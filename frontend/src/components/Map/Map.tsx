@@ -1,4 +1,4 @@
-import { Component, createEffect, createSignal } from "solid-js";
+import { Component, createEffect } from "solid-js";
 import { GoogleMap, MapsJSAPIOptions } from "@googlemaps/map-loader";
 import { MapLoaderOptions } from "@googlemaps/map-loader/dist/map-loader";
 import { googleMapsAPIKey } from "../../api.secret";
