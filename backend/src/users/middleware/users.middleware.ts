@@ -9,13 +9,11 @@ class UsersMiddleware {
 	validateSameEmailDoesntExist: RequestHandler = async (req, res, next) => {
 		const user = await usersService.getUserByEmail(req.body.email);
 		if (user)
-			return res
-				.status(400)
-				.send({
-					errors: [
-						{ msg: `A user with that email already exists.` },
-					] as ValidationError[],
-				});
+			return res.status(400).send({
+				errors: [
+					{ msg: `A user with that email already exists.` },
+				] as ValidationError[],
+			});
 		return next();
 	};
 

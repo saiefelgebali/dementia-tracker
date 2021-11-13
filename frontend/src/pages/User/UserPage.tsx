@@ -1,5 +1,6 @@
 import { useParams } from "solid-app-router";
 import { Component, createResource, createSignal, For } from "solid-js";
+import { getUserDataRequest } from "../../api/users/get.user.data.request";
 import { getUserRequest } from "../../api/users/get.user.request";
 import { User, UserData } from "../../api/users/users.interface";
 import Map from "../../components/Map/Map";
@@ -52,18 +53,21 @@ const UserPage: Component = () => {
 			console.error(error.message);
 		};
 
-		// const response = await getGroup({ id }, { error, catchError });
+		const response = await getUserDataRequest(
+			{ id },
+			{ error, catchError }
+		);
 
-		// let group: Group | null = null;
+		let userData: UserData[] | null = null;
 
-		// // success
-		// if (response?.ok) {
-		// 	group = await response.json();
-		// }
+		// success
+		if (response?.ok) {
+			userData = await response.json();
+		}
 
 		setLoading(false);
 
-		return [{ id: "1", location: "12345" }];
+		return userData;
 	});
 
 	return (
@@ -79,6 +83,9 @@ const UserPage: Component = () => {
 			// polygonInitial={[{ lat: 52.1780726, lng: 0.1349691402320342 }]}
 			/>
 
+			<div className='header'>
+				<h2>Location Data</h2>
+			</div>
 			<div class='list'>
 				<For each={data()}>{(data) => <DataItem data={data} />}</For>
 				{loading() && <div class='list-item'>Loading...</div>}

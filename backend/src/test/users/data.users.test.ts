@@ -39,4 +39,11 @@ describe("test user data", () => {
 			patient.data.map((o) => o.id)
 		);
 	});
+	it("remove user data", async () => {
+		const res = await request
+			.delete(`/users/${patient.id}/data/${patient.data[0].id}`)
+			.set({ Authorization: `Bearer ${patient.accessToken}` })
+			.send();
+		expect(res.status).to.equal(204);
+	});
 });

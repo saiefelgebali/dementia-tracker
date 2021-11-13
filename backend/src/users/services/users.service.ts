@@ -38,6 +38,9 @@ class UserService implements CRUD {
 	addUserData = (id: string, data: CreateUserDataDto) => {
 		return UsersDao.addUserData(id, data);
 	};
+	deleteUserDataById = (id: string) => {
+		return UsersDao.deleteUserDataById(id);
+	};
 	getUserData = (id: string, offset: number, limit: number) => {
 		return UsersDao.getUserData(id, offset, limit);
 	};

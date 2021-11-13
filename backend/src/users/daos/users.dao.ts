@@ -65,6 +65,10 @@ class UsersDao {
 		return data._id;
 	}
 
+	async deleteUserDataById(dataId: string) {
+		return this.Data.deleteOne({ _id: dataId }).exec();
+	}
+
 	async getUserData(userId: string, offset: number, limit: number) {
 		const data = this.Data.find({ userId })
 			.skip(offset)

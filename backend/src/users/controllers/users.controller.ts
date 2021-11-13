@@ -80,6 +80,12 @@ class UsersController {
 		const data = await usersService.getUserData(req.body.id, offset, limit);
 		return res.status(200).send(data);
 	};
+
+	removeUserData: RequestHandler = async (req, res) => {
+		const result = await usersService.deleteUserDataById(req.params.dataId);
+		debugLog(`removed user data ${req.params.dataId}`);
+		return res.status(204).send();
+	};
 }
 
 export default new UsersController();

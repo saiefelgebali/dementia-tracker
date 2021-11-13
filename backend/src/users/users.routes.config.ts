@@ -93,6 +93,14 @@ export class UserRoutes extends CommonRoutesConfig {
 				usersController.addUserData
 			);
 
+		this.app
+			.route("/users/:userId/data/:dataId")
+			.delete(
+				jwtMiddleware.validJWTNeeded,
+				permissionMiddleware.onlySameUserOrNurseCanAccess,
+				usersController.removeUserData
+			);
+
 		this.app.put("/users/:userId/permissionFlags/:permissionFlags", [
 			jwtMiddleware.validJWTNeeded,
 			permissionMiddleware.onlySameUserOrAdminCanAccess,
