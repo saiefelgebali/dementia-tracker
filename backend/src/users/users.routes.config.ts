@@ -43,7 +43,7 @@ export class UserRoutes extends CommonRoutesConfig {
 			.all(
 				usersMiddleware.validateUserExists,
 				jwtMiddleware.validJWTNeeded,
-				permissionMiddleware.onlySameUserOrAdminCanAccess
+				permissionMiddleware.onlySameUserOrNurseCanAccess
 			)
 			.get(usersController.getUserById)
 			.put(

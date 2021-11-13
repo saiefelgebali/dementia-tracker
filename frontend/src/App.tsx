@@ -6,6 +6,7 @@ import LoginPage from "./pages/Login/LoginPage";
 import GroupsPage from "./pages/Groups/GroupsPage";
 import MainLayout from "./layouts/main/MainLayout";
 import GroupPage from "./pages/Group/GroupPage";
+import UserPage from "./pages/User/UserPage";
 
 const App: Component = () => {
 	return (
@@ -17,6 +18,7 @@ const App: Component = () => {
 					{/* <Route path='/buy' component={HomePage} /> */}
 					<Route path='/groups' component={GroupsPage} />
 					<Route path='/groups/:id' component={GroupPage} />
+					<Route path='/users/:id' component={UserPage} />
 				</Route>
 				<Route path='/auth' component={AuthLayout}>
 					<Route path='/login' component={LoginPage} />

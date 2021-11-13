@@ -3,3 +3,8 @@ export interface User {
 	email: string;
 	permissionFlags: number;
 }
+
+export interface UserData {
+	id: string;
+	location: string;
+}

@@ -48,6 +48,21 @@ class PermissionMiddleware {
 		// otherwise deny access
 		return res.status(403).send();
 	};
+
+	onlySameUserOrNurseCanAccess: RequestHandler = (req, res, next) => {
+		const userPermissionFlags = parseInt(res.locals.jwt.permissionFlags);
+
+		// Allow access if same user
+		if (req.params?.userId && req.params.userId === res.locals.jwt.userId)
+			return next();
+
+		// Allow access if admin
+		if (userPermissionFlags & PermissionFlag.NURSE_PERMISSION)
+			return next();
+
+		// otherwise deny access
+		return res.status(403).send();
+	};
 }
 
 export default new PermissionMiddleware();
