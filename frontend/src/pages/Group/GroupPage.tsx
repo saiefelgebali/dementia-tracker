@@ -79,7 +79,9 @@ const GroupPage: Component = () => {
 			<div className='header'>
 				<h2>Patients</h2>
 			</div>
-			<button class='mb'>Add patient</button>
+			<Link href={`/groups/${id}/add`} class='button primary mb'>
+				Add patient
+			</Link>
 
 			<div class='list'>
 				<For each={group()?.patients}>
