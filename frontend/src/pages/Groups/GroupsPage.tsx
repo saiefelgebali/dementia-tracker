@@ -47,9 +47,9 @@ const GroupsPage: Component = () => {
 			<div class='header'>
 				<h1>Groups</h1>
 			</div>
-			<div class='mb'>
-				<button>Create a new group</button>
-			</div>
+			<Link href='/groups/create' class='button'>
+				Create a new group
+			</Link>
 
 			<div class='list'>
 				<For each={groups()}>

@@ -10,6 +10,7 @@ import UserPage from "./pages/User/UserPage";
 import { User } from "./api/users/users.interface";
 import { getMe } from "./api/users/get.me.request";
 import { accessToken, setMe } from "./store/app.store";
+import CreateGroup from "./pages/CreateGroup/CreateGroup";
 
 const App: Component = () => {
 	const [meResource] = createResource<User | undefined>(async () => {
@@ -34,6 +35,7 @@ const App: Component = () => {
 					{/* <Route path='/home' component={HomePage} /> */}
 					{/* <Route path='/buy' component={HomePage} /> */}
 					<Route path='/groups' component={GroupsPage} />
+					<Route path='/groups/create' component={CreateGroup} />
 					<Route path='/groups/:id' component={GroupPage} />
 					<Route path='/users/:id' component={UserPage} />
 				</Route>

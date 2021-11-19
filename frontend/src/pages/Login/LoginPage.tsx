@@ -1,7 +1,7 @@
 import { Link } from "solid-app-router";
 import { Component } from "solid-js";
 import { APIResErrors } from "../../api/interface/api.res.errors.interface";
-import { LoginResponse } from "../../api/auth/login.interface";
+import { LoginResponse } from "../../api/auth/login.request";
 import { loginRequest } from "../../api/auth/login.request";
 import Form from "../../components/Form/Form";
 import FormErrors from "../../components/FormErrors/FormErrors";
