@@ -1,0 +1,11 @@
+# Large Directories
+node_modules/
+dist/
+data/
+
+# Private
+.env
+*.secret.*
+
+# Misc
+yarn.lock
