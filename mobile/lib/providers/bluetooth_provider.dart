@@ -1,14 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 
-class BluetoothState with ChangeNotifier {
+class BluetoothProvider with ChangeNotifier {
   final FlutterBluetoothSerial _bluetooth = FlutterBluetoothSerial.instance;
 
-  BluetoothState() {
-    // Add all bonded devices to device list
-    _bluetooth.getBondedDevices().asStream().listen((devices) {
-      deviceList = devices;
-    });
+  BluetoothProvider() {
+    loadDevices();
   }
 
   // Device list
@@ -33,6 +30,13 @@ class BluetoothState with ChangeNotifier {
     notifyListeners();
   }
 
+  void loadDevices() {
+    // Add all bonded devices to device list
+    _bluetooth.getBondedDevices().asStream().listen((devices) {
+      deviceList = devices;
+    });
+  }
+
   // Connected Device
   BluetoothDevice? _connectedDevice;
 
@@ -40,12 +44,24 @@ class BluetoothState with ChangeNotifier {
     return _connectedDevice;
   }
 
+  set connectedDevice(newDevice) {
+    _connectedDevice = newDevice;
+    notifyListeners();
+  }
+
+  // Device connection
   BluetoothConnection? _connection;
 
   BluetoothConnection? get connection {
     return _connection;
   }
 
+  set connection(newConnection) {
+    _connection = newConnection;
+    notifyListeners();
+  }
+
+  // Connect a device to client. Save device, and connection details in state
   Future<bool> connectToDevice(BluetoothDevice device) async {
     print("Connecting to ${device.name}");
 
@@ -59,5 +75,13 @@ class BluetoothState with ChangeNotifier {
       // error connecting
       return false;
     }
+  }
+
+  void disconnect() async {
+    await connection?.finish();
+    connectedDevice = null;
+    connection = null;
+
+    notifyListeners();
   }
 }
