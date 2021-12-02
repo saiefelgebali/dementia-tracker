@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'pages/home_page.dart';
+import 'pages/device_list_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const App());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  const App({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -15,9 +15,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Drift',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.indigo,
       ),
-      home: const HomePage(),
+      home: const DeviceListPage(),
+      routes: {
+        DeviceListPage.routeName: (ctx) => const DeviceListPage(),
+      },
     );
   }
 }
