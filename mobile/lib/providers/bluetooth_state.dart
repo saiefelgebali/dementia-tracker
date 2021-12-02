@@ -35,4 +35,29 @@ class BluetoothState with ChangeNotifier {
 
   // Connected Device
   BluetoothDevice? _connectedDevice;
+
+  BluetoothDevice? get connectedDevice {
+    return _connectedDevice;
+  }
+
+  BluetoothConnection? _connection;
+
+  BluetoothConnection? get connection {
+    return _connection;
+  }
+
+  Future<bool> connectToDevice(BluetoothDevice device) async {
+    print("Connecting to ${device.name}");
+
+    // try to make connection to device
+    try {
+      // successful connection
+      _connection = await BluetoothConnection.toAddress(device.address);
+      _connectedDevice = device;
+      return true;
+    } catch (e) {
+      // error connecting
+      return false;
+    }
+  }
 }

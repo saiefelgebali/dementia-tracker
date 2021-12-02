@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 
 import './pages/device_list_page.dart';
 import './providers/bluetooth_state.dart';
-import './providers/connected_device.dart';
 
 void main() {
   runApp(const App());
@@ -36,7 +35,6 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BluetoothState()),
-        ChangeNotifierProvider(create: (context) => ConnectedDevice()),
       ],
       child: _buildApp(),
     );
