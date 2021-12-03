@@ -61,14 +61,19 @@ export class GroupRoutes extends CommonRoutesConfig {
 			);
 
 		this.app
-			.route("/groups/:groupId/patients/:userId")
+			.route("/groups/:groupId/patients")
 			.post(
+				body("email").isEmail(),
+				bodyValidationMiddleware.verifyBodyFieldsErrors,
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(
 					PermissionFlag.NURSE_PERMISSION
 				),
 				groupsController.addPatient
-			)
+			);
+
+		this.app
+			.route("/groups/:groupId/patients/:userId")
 			.delete(
 				jwtMiddleware.validJWTNeeded,
 				permissionMiddleware.permissionFlagRequired(

@@ -9,9 +9,46 @@ import GroupPage from "./pages/Group/GroupPage";
 import UserPage from "./pages/User/UserPage";
 import { User } from "./api/users/users.interface";
 import { getMe } from "./api/users/get.me.request";
-import { accessToken, setMe } from "./store/app.store";
+import { accessToken, me, setMe } from "./store/app.store";
 import CreateGroup from "./pages/CreateGroup/CreateGroup";
 import AddPatient from "./pages/AddPatient/AddPatient";
+
+const NurseRoutes: Component = () => {
+	return (
+		<Router>
+			<Routes>
+				<Route path='/' component={MainLayout}>
+					<Route path='/' component={GroupsPage} />
+					<Route path='/groups' component={GroupsPage} />
+					<Route path='/groups/create' component={CreateGroup} />
+					<Route path='/groups/:id' component={GroupPage} />
+					<Route path='/groups/:id/add' component={AddPatient} />
+					<Route path='/users/:id' component={UserPage} />
+				</Route>
+				<Route path='/auth' component={AuthLayout}>
+					<Route path='/login' component={LoginPage} />
+					<Route path='/register' component={RegisterPage} />
+				</Route>
+			</Routes>
+		</Router>
+	);
+};
+
+const PatientRoutes: Component = () => {
+	return (
+		<Router>
+			<Routes>
+				<Route path='/' component={MainLayout}>
+					<Route path='/' component={UserPage} />
+				</Route>
+				<Route path='/auth' component={AuthLayout}>
+					<Route path='/login' component={LoginPage} />
+					<Route path='/register' component={RegisterPage} />
+				</Route>
+			</Routes>
+		</Router>
+	);
+};
 
 const App: Component = () => {
 	const [meResource] = createResource<User | undefined>(async () => {
@@ -27,26 +64,10 @@ const App: Component = () => {
 			return meUser;
 		}
 	});
+	console.log(me());
 
 	return (
-		<Router>
-			<Routes>
-				<Route path='/' component={MainLayout}>
-					<Route path='/' component={GroupsPage} />
-					{/* <Route path='/home' component={HomePage} /> */}
-					{/* <Route path='/buy' component={HomePage} /> */}
-					<Route path='/groups' component={GroupsPage} />
-					<Route path='/groups/create' component={CreateGroup} />
-					<Route path='/groups/:id' component={GroupPage} />
-					<Route path='/groups/:id/add' component={AddPatient} />
-					<Route path='/users/:id' component={UserPage} />
-				</Route>
-				<Route path='/auth' component={AuthLayout}>
-					<Route path='/login' component={LoginPage} />
-					<Route path='/register' component={RegisterPage} />
-				</Route>
-			</Routes>
-		</Router>
+		<>{me()?.permissionFlags === 1 ? <PatientRoutes /> : <NurseRoutes />}</>
 	);
 };
 

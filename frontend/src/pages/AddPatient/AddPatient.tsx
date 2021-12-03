@@ -1,14 +1,20 @@
 import { Link, useParams } from "solid-app-router";
 import { Component } from "solid-js";
-import { User } from "../../api/users/users.interface";
+import { postGroupPatient } from "../../api/groups/post.group.patient";
 import Form from "../../components/Form/Form";
 import FormInput from "../../components/FormInput/FormInput";
 
 const AddPatient: Component = () => {
 	const { id } = useParams();
 
-	const addPatientToGroup = (e: Event) => {
+	const addPatientToGroup = async (e: Event) => {
+		e.preventDefault();
 		const form = e.target as HTMLFormElement;
+		const email = form.email.value;
+		const response = await postGroupPatient({ email, groupId: id });
+		if (response?.status === 204) {
+			window.location.href = "/";
+		}
 	};
 
 	return (

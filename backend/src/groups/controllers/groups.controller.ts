@@ -56,9 +56,10 @@ class GroupController {
 	};
 
 	addPatient: RequestHandler = async (req, res) => {
+		const user = await usersService.getUserByEmail(req.body.email);
 		const result = await groupsService.addPatient(
 			req.body.groupId,
-			req.body.id
+			user._id
 		);
 		return res.status(204).send();
 	};
