@@ -13,6 +13,7 @@
 		"@googlemaps/map-loader": "^0.2.0",
 		"node-sass": "^6.0.1",
 		"sass": "^1.43.2",
+		"socket.io-client": "^4.4.0",
 		"solid-app-router": "^0.1.9",
 		"solid-js": "^1.1.3"
 	},

@@ -11,11 +11,14 @@ import { getUserDataRequest } from "../../api/users/get.user.data.request";
 import { getUserRequest } from "../../api/users/get.user.request";
 import { User, UserData } from "../../api/users/users.interface";
 import Map from "../../components/Map/Map";
+import { socket } from "../../ws/socket";
 
 const UserPage: Component = () => {
 	const { id } = useParams();
 	const [loading, setLoading] = createSignal(false);
 	const [map, setMap] = createSignal<google.maps.Map>();
+
+	socket().emit("welcome", id);
 
 	const [user] = createResource<User | null>(async (k, prev) => {
 		setLoading(true);
@@ -42,7 +45,7 @@ const UserPage: Component = () => {
 		return user;
 	});
 
-	const [data, { mutate }] = createResource<UserData[]>(
+	const [data, { mutate, refetch }] = createResource<UserData[]>(
 		async (k, prev) => {
 			setLoading(true);
 
@@ -75,6 +78,10 @@ const UserPage: Component = () => {
 		}
 	);
 
+	socket().on("data", (data) => {
+		refetch();
+	});
+
 	createEffect(() => {
 		const currentMap = map();
 		if (!currentMap) return;
@@ -102,7 +109,10 @@ const UserPage: Component = () => {
 		addUserDataPath(currentMap);
 	});
 
-	const DataItem: Component<{ data: UserData }> = ({ data }) => {
+	const DataItem: Component<{ data: UserData; refetch: Function }> = ({
+		data,
+		refetch,
+	}) => {
 		async function deleteData() {
 			// remove from list
 			mutate((userData) => userData?.filter((d) => d._id !== data._id));
@@ -113,6 +123,8 @@ const UserPage: Component = () => {
 			if (res?.status !== 204) {
 				console.log("Could not delete user data");
 			}
+
+			refetch();
 		}
 
 		return (
@@ -142,7 +154,9 @@ const UserPage: Component = () => {
 				<h2>Location Data</h2>
 			</div>
 			<div class='list'>
-				<For each={data()}>{(data) => <DataItem data={data} />}</For>
+				<For each={data()}>
+					{(data) => <DataItem data={data} refetch={refetch} />}
+				</For>
 				{loading() && <div class='list-item'>Loading...</div>}
 			</div>
 		</>
