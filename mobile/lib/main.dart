@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/pages/login_page.dart';
 import 'package:provider/provider.dart';
 
 import './pages/device_list_page.dart';
@@ -26,6 +27,7 @@ class App extends StatelessWidget {
         DeviceListPage.routeName: (ctx) => const DeviceListPage(),
         ConnectionPage.routeName: (ctx) =>
             ConnectionPage(Provider.of<BluetoothProvider>(ctx)),
+        LoginPage.routeName: (ctx) => const LoginPage(),
       },
 
       // Debug

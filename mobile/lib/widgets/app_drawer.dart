@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/pages/login_page.dart';
 import 'package:provider/provider.dart';
 
 import '../pages/device_list_page.dart';
@@ -17,6 +18,15 @@ class AppDrawer extends StatelessWidget {
             title: const Text("Drift"),
           ),
 
+          // Login page
+          ListTile(
+            leading: const Icon(Icons.bluetooth),
+            title: const Text("Login"),
+            onTap: () {
+              Navigator.of(context).pushNamed(LoginPage.routeName);
+            },
+          ),
+
           // Device list
           const Divider(),
           ListTile(
@@ -26,6 +36,8 @@ class AppDrawer extends StatelessWidget {
               Navigator.of(context).pushNamed(DeviceListPage.routeName);
             },
           ),
+
+          // Device connection
           Consumer<BluetoothProvider>(builder: (context, bluetooth, child) {
             var device = bluetooth.connectedDevice;
 
@@ -38,7 +50,7 @@ class AppDrawer extends StatelessWidget {
                 Navigator.of(context).pushNamed(ConnectionPage.routeName);
               },
             );
-          })
+          }),
         ],
       ),
     );
