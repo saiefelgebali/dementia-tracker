@@ -4,6 +4,7 @@ import { CreateUserDto } from "../dto/create.user.dto";
 import { PutUserDto } from "../dto/put.user.dto";
 import { PatchUserDto } from "../dto/patch.user.dto";
 import { CreateUserDataDto } from "../dto/create.user.data.dto";
+import usersWs from "../ws/users.ws";
 
 class UserService implements CRUD {
 	list = (offset: number, limit: number) => {
@@ -36,6 +37,7 @@ class UserService implements CRUD {
 	};
 
 	addUserData = (id: string, data: CreateUserDataDto) => {
+		usersWs.notifyAddData(id, data);
 		return UsersDao.addUserData(id, data);
 	};
 	deleteUserDataById = (id: string) => {

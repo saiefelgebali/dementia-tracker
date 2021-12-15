@@ -9,6 +9,7 @@ import { AuthRoutes } from "./auth/auth.routes.config";
 import { print } from "./util/console";
 import { logger } from "./util/logger";
 import { GroupRoutes } from "./groups/groups.routes.config";
+import UsersWs from "./users/ws/users.ws";
 
 const app = express();
 const server = http.createServer(app);
@@ -33,6 +34,9 @@ if (process.env.NODE_ENV !== "test") app.use(logger);
 routes.push(new AuthRoutes(app));
 routes.push(new UserRoutes(app));
 routes.push(new GroupRoutes(app));
+
+// use socket servers
+UsersWs.startServer(server);
 
 // simple running message to make sure everything is working properly
 const runningMessage = `Server running at http://localhost:${port}`;
