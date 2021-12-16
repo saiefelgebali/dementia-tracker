@@ -24,7 +24,7 @@ app.use(helmet());
 app.use(express.json());
 
 // allow cross-origin requests
-app.use(cors({ origin: "*" }));
+app.use(cors());
 
 // log requests if not testing
 if (process.env.NODE_ENV !== "test") app.use(logger);
