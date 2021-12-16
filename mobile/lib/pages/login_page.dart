@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
-  void login(UserProvider userProvider) {
+  void login(UserProvider userProvider) async {
     final email = emailController.text;
     final password = passwordController.text;
 
@@ -24,7 +24,31 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    userProvider.loginUser(email, password);
+    var success = await userProvider.loginUser(email, password);
+
+    // If login was successful, navigate to home page
+    if (success) {
+      Navigator.of(context).pushReplacementNamed('/');
+    }
+
+    // If login was failed, show error message
+    else {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text("Login Failed"),
+          content: const Text("Please check your credentials"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Okay"),
+              onPressed: () {
+                Navigator.of(ctx).pop();
+              },
+            )
+          ],
+        ),
+      );
+    }
   }
 
   @override

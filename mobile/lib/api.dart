@@ -12,7 +12,7 @@ Future<Map<String, dynamic>?> loginUserRequest(
     headers: {
       "Content-Type": "application/json",
     },
-    body: json.encode({'email': email, 'password': password}),
+    body: json.encode({'email': email.trim(), 'password': password}),
   );
 
   // Successful login

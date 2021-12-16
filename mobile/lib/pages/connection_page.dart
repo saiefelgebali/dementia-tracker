@@ -103,6 +103,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
               "Longitude: $longitude",
               style: Theme.of(context).textTheme.headline5,
             ),
+            Text("Connected as user: ${widget.user.email}"),
           ],
         ),
       ),
