@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../providers/bluetooth_provider.dart';
+import '../providers/user_provider.dart';
 import '../api.dart';
 
 class ConnectionPage extends StatefulWidget {
-  const ConnectionPage(this.bluetooth, {Key? key}) : super(key: key);
+  const ConnectionPage(this.bluetooth, this.user, {Key? key}) : super(key: key);
 
   static const routeName = '/connection';
 
   final BluetoothProvider bluetooth;
+
+  final UserProvider user;
 
   @override
   State<ConnectionPage> createState() => _ConnectionPageState();
@@ -68,6 +71,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
 
       current++;
 
+      // Send data to server
       if (current > 10) {
         // postUserData(userId, newLat, newLng);
         current = 0;

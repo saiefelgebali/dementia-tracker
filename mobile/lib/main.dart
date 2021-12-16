@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/pages/login_page.dart';
+import 'package:mobile/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 
 import './pages/device_list_page.dart';
@@ -25,8 +26,10 @@ class App extends StatelessWidget {
       // Routing
       routes: {
         DeviceListPage.routeName: (ctx) => const DeviceListPage(),
-        ConnectionPage.routeName: (ctx) =>
-            ConnectionPage(Provider.of<BluetoothProvider>(ctx)),
+        ConnectionPage.routeName: (ctx) => ConnectionPage(
+              Provider.of<BluetoothProvider>(ctx),
+              Provider.of<UserProvider>(ctx),
+            ),
         LoginPage.routeName: (ctx) => const LoginPage(),
       },
 
@@ -40,6 +43,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => BluetoothProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
       ],
       child: _buildApp(),
     );

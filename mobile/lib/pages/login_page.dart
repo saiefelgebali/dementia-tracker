@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:mobile/api.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/user_provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,8 +16,21 @@ class _LoginPageState extends State<LoginPage> {
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
 
+  void login(UserProvider userProvider) {
+    final email = emailController.text;
+    final password = passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      return;
+    }
+
+    userProvider.loginUser(email, password);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Login"),
@@ -56,16 +70,7 @@ class _LoginPageState extends State<LoginPage> {
                   height: 40,
                   child: ElevatedButton(
                     child: const Text("Login"),
-                    onPressed: () {
-                      final email = emailController.text;
-                      final password = passwordController.text;
-
-                      if (email.isEmpty || password.isEmpty) {
-                        return;
-                      }
-
-                      loginUser(email, password);
-                    },
+                    onPressed: () => login(userProvider),
                   ),
                 ),
               ),

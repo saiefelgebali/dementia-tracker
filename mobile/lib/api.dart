@@ -1,11 +1,16 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-void loginUser(String email, String password) async {
+const apiBaseRoute = "68.183.35.107";
+
+Future<Map<String, dynamic>?> loginUserRequest(
+    String email, String password) async {
   print(
     "Logging in to user $email.",
   );
-  var url = Uri.http("68.183.35.107", "/auth");
+
+  // Make request
+  var url = Uri.http(apiBaseRoute, "/auth");
   var res = await http.post(
     url,
     headers: {
@@ -14,23 +19,39 @@ void loginUser(String email, String password) async {
     body: json.encode({'email': email, 'password': password}),
   );
 
+  // Successful login
   if (res.statusCode == 201) {
     print(
       "Logged in to user $email.",
     );
 
-    Map<String, dynamic> result = jsonDecode(res.body);
+    return jsonDecode(res.body);
+  }
 
-    String access = result['accessToken'];
-    String refresh = result['refreshToken'];
-
-    print("accessToken: $access");
-    print("refreshToken: $refresh");
-  } else {
+  // Failed login attempt
+  else {
     print(
       "Failed to log in to user $email.",
     );
+
+    return null;
   }
+}
+
+Future<Map<String, dynamic>> getUserRequest(String accessToken) async {
+  // Make request
+  var url = Uri.http("68.183.35.107", "/users/me");
+  var res = await http.get(
+    url,
+    headers: {
+      // "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken",
+    },
+  );
+
+  print(res.body);
+
+  return jsonDecode(res.body);
 }
 
 void postUserData(String userId, double latitude, double longitude) async {
