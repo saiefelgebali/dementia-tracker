@@ -31,6 +31,7 @@ export async function apiRequestNoAuth(
 			...init,
 			headers: {
 				"Content-Type": "application/json",
+				"Access-Control-Allow-Origin": "*",
 				Authorization: `Bearer ${accessToken()}`,
 				...init.headers,
 			},
