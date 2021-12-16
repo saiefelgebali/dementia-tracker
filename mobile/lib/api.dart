@@ -5,10 +5,6 @@ const apiBaseRoute = "68.183.35.107";
 
 Future<Map<String, dynamic>?> loginUserRequest(
     String email, String password) async {
-  print(
-    "Logging in to user $email.",
-  );
-
   // Make request
   var url = Uri.http(apiBaseRoute, "/auth");
   var res = await http.post(
@@ -21,19 +17,11 @@ Future<Map<String, dynamic>?> loginUserRequest(
 
   // Successful login
   if (res.statusCode == 201) {
-    print(
-      "Logged in to user $email.",
-    );
-
     return jsonDecode(res.body);
   }
 
   // Failed login attempt
   else {
-    print(
-      "Failed to log in to user $email.",
-    );
-
     return null;
   }
 }
@@ -49,15 +37,18 @@ Future<Map<String, dynamic>> getUserRequest(String accessToken) async {
     },
   );
 
-  print(res.body);
-
   return jsonDecode(res.body);
 }
 
-void postUserData(String userId, double latitude, double longitude) async {
-  print(
-    "Uploading user data. UserId: $userId. Location: ($latitude, $longitude)",
+void postUserDataRequest(
+    String userId, double lat, double lng, String accessToken) async {
+  var url = Uri.http(apiBaseRoute, "/users/$userId/data");
+  var res = await http.post(
+    url,
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer $accessToken",
+    },
+    body: json.encode({'location': '$lat $lng'}),
   );
-  var url = Uri.http("68.183.35.107", "/users/$userId/data");
-  await http.post(url, body: {'location': '$latitude $longitude'});
 }

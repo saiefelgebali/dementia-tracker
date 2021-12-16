@@ -70,10 +70,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
       });
 
       current++;
-
       // Send data to server
-      if (current > 10) {
-        // postUserData(userId, newLat, newLng);
+      if (current > 5) {
+        widget.user.addUserData(latitude, longitude);
         current = 0;
       }
     }

@@ -35,9 +35,15 @@ class UserProvider with ChangeNotifier {
   }
 
   void getUser() async {
-    print('get user using access: $accessToken');
     final user = await getUserRequest(accessToken);
-    String? id = user['id'];
+    String? id = user['_id'];
     userId = id ?? "";
+  }
+
+  void addUserData(double lat, double lng) async {
+    if (userId.isEmpty || accessToken.isEmpty) {
+      return;
+    }
+    postUserDataRequest(userId, lat, lng, accessToken);
   }
 }

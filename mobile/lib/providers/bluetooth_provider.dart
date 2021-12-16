@@ -63,8 +63,6 @@ class BluetoothProvider with ChangeNotifier {
 
   // Connect a device to client. Save device, and connection details in state
   Future<bool> connectToDevice(BluetoothDevice device) async {
-    print("Connecting to ${device.name}");
-
     // try to make connection to device
     try {
       // successful connection
